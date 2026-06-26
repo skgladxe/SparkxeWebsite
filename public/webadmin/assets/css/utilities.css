@@ -1,0 +1,45 @@
+/**
+ * WebAdmin utility classes extracted from inline styles.
+ * UI: identical dimensions — only moved from style="" attributes.
+ */
+
+.admin-scroll-sm {
+	height: 300px;
+}
+
+.admin-scroll-md {
+	height: 325px;
+}
+
+.admin-scroll-lg {
+	height: 385px;
+}
+
+.admin-card-promo {
+	background-position: center;
+	background-size: cover;
+}
+
+.admin-progress-70 {
+	width: 70%;
+}
+
+.admin-progress-25 {
+	width: 25%;
+}
+
+.admin-progress-5 {
+	width: 5%;
+}
+
+.admin-progress-85 {
+	width: 85%;
+}
+
+.admin-progress-60 {
+	width: 60%;
+}
+
+.admin-progress-40 {
+	width: 40%;
+}

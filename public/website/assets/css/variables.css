@@ -1,0 +1,156 @@
+/* ================================================
+   Sparkxe — 10 Color Themes
+   Switch via body data-theme attribute or picker
+   ================================================ */
+
+/* Theme 1 — Spark (default teal + lime) */
+:root,
+[data-theme="spark"] {
+	--primary-color: #F8F8F8;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #F8F8F8;
+	--accent-color: #F0FF6C;
+	--accent-secondary-color: #6BFDD9;
+	--black-color: #163031;
+	--divider-color: #FFFFFF0F;
+	--dark-divider-color: #16151324;
+	--error-color: rgb(230, 87, 87);
+	--nav-shell-bg: rgba(22, 48, 49, 0.96);
+	--default-font: "Montserrat", sans-serif;
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 2 — Ocean (deep blue + cyan) */
+[data-theme="ocean"] {
+	--primary-color: #F0F6FF;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #F0F6FF;
+	--accent-color: #5CE1FF;
+	--accent-secondary-color: #4D7CFF;
+	--black-color: #0B1A2E;
+	--divider-color: #FFFFFF12;
+	--dark-divider-color: #0a152024;
+	--error-color: rgb(230, 87, 87);
+	--nav-shell-bg: rgba(11, 26, 46, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 3 — Sunset (warm coral + gold) */
+[data-theme="sunset"] {
+	--primary-color: #FFF8F2;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #FFF8F2;
+	--accent-color: #FFB347;
+	--accent-secondary-color: #FF6B6B;
+	--black-color: #1F1210;
+	--divider-color: #FFFFFF10;
+	--dark-divider-color: #1a100e24;
+	--error-color: rgb(230, 87, 87);
+	--nav-shell-bg: rgba(31, 18, 16, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 4 — Violet (purple + pink) */
+[data-theme="violet"] {
+	--primary-color: #F5F0FF;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #F5F0FF;
+	--accent-color: #C084FC;
+	--accent-secondary-color: #818CF8;
+	--black-color: #140B1F;
+	--divider-color: #FFFFFF10;
+	--dark-divider-color: #120a1c24;
+	--error-color: rgb(230, 87, 87);
+	--nav-shell-bg: rgba(20, 11, 31, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 5 — Forest (earthy green + gold) */
+[data-theme="forest"] {
+	--primary-color: #F4FFF5;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #F4FFF5;
+	--accent-color: #A3E635;
+	--accent-secondary-color: #34D399;
+	--black-color: #0F1F14;
+	--divider-color: #FFFFFF10;
+	--dark-divider-color: #0d1a1224;
+	--error-color: rgb(230, 87, 87);
+	--nav-shell-bg: rgba(15, 31, 20, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 6 — Rose (blush + pink) */
+[data-theme="rose"] {
+	--primary-color: #FFF5F7;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #FFF5F7;
+	--accent-color: #FDA4AF;
+	--accent-secondary-color: #F472B6;
+	--black-color: #1A0F14;
+	--divider-color: #FFFFFF10;
+	--nav-shell-bg: rgba(26, 15, 20, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 7 — Midnight (slate + silver) */
+[data-theme="midnight"] {
+	--primary-color: #F1F5F9;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #F1F5F9;
+	--accent-color: #CBD5E1;
+	--accent-secondary-color: #94A3B8;
+	--black-color: #0A0E17;
+	--divider-color: #FFFFFF12;
+	--nav-shell-bg: rgba(10, 14, 23, 0.97);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 8 — Copper (bronze + amber) */
+[data-theme="copper"] {
+	--primary-color: #FFF7ED;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #FFF7ED;
+	--accent-color: #FBBF24;
+	--accent-secondary-color: #F59E0B;
+	--black-color: #1C1410;
+	--divider-color: #FFFFFF10;
+	--nav-shell-bg: rgba(28, 20, 16, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 9 — Arctic (ice blue + frost) */
+[data-theme="arctic"] {
+	--primary-color: #F0F9FF;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #F0F9FF;
+	--accent-color: #BAE6FD;
+	--accent-secondary-color: #38BDF8;
+	--black-color: #0F1A20;
+	--divider-color: #FFFFFF12;
+	--nav-shell-bg: rgba(15, 26, 32, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}
+
+/* Theme 10 — Neon (cyber cyan + magenta) */
+[data-theme="neon"] {
+	--primary-color: #FAFAFA;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #FAFAFA;
+	--accent-color: #22D3EE;
+	--accent-secondary-color: #E879F9;
+	--black-color: #0D0D12;
+	--divider-color: #FFFFFF10;
+	--nav-shell-bg: rgba(13, 13, 18, 0.97);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}

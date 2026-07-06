@@ -1,9 +1,13 @@
 @extends('website.layouts.website')
 
 @section('content')
-	@include('website.sections.hero')
+	@if ($siteSettings['heroVisible'])
+		@include('website.sections.hero')
+	@endif
 	@include('website.sections.ticker')
-	@include('website.sections.specialization')
+	@if ($siteSettings['productsVisible'])
+		@include('website.sections.products')
+	@endif
 	@include('website.sections.facts')
 	@include('website.sections.services-grid')
 	@include('website.sections.why-choose-us')

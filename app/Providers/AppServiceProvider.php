@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use App\Models\Blog;
 use App\Models\Faq;
+use App\Models\HeroSlide;
+use App\Models\Product;
+use App\Models\Service;
+use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use App\Services\SeoService;
 use Illuminate\Support\Facades\Blade;
@@ -37,7 +41,24 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('website.*', function ($view) {
             $view->with('seo', app(SeoService::class)->resolveForRequest());
-            $view->with('siteLogoUrl', \App\Models\SiteSetting::logoUrl());
+            $view->with('siteLogoUrl', SiteSetting::logoUrl());
+            $view->with('siteSettings', SiteSetting::websiteSettings());
+        });
+
+        View::composer('website.sections.hero', function ($view) {
+            $view->with('heroSlides', HeroSlide::query()->active()->get());
+        });
+
+        View::composer('website.sections.products', function ($view) {
+            $view->with('products', Product::query()->active()->get());
+        });
+
+        View::composer('website.sections.services-grid', function ($view) {
+            $view->with('services', Service::query()->active()->get());
+        });
+
+        View::composer('website.partials.header', function ($view) {
+            $view->with('menuProducts', Product::query()->active()->get());
         });
 
         View::composer(['website.sections.team', 'website.pages.about'], function ($view) {

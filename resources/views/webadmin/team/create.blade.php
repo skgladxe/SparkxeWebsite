@@ -11,3 +11,4 @@
 	</div></div>
 </div>
 @endsection
+@include('webadmin.partials.rich-editor')

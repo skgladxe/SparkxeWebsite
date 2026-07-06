@@ -18,6 +18,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
 
 	<link href="{{ asset('website/assets/css/variables.css') }}" rel="stylesheet">
+	@include('website.partials.theme-vars')
 	<link href="{{ asset('website/assets/css/preloader.css') }}" rel="stylesheet">
 	<link href="{{ asset('website/assets/css/base.css') }}" rel="stylesheet">
 	<link href="{{ asset('website/assets/css/header.css') }}" rel="stylesheet">
@@ -25,15 +26,27 @@
 	<link href="{{ asset('website/assets/css/sections.css') }}" rel="stylesheet">
 	<link href="{{ asset('website/assets/css/pages.css') }}" rel="stylesheet">
 	<link href="{{ asset('website/assets/css/extra-sections.css') }}" rel="stylesheet">
+	<link href="{{ asset('rich-editor/content.css') }}" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
 	@stack('styles')
 </head>
-<body class="active-sticky-header" data-theme="{{ config('website.default_theme') }}">
+<body
+	class="active-sticky-header"
+	data-theme="{{ $siteSettings['bodyTheme'] ?? config('website.default_theme') }}"
+	data-theme-locked="{{ ($siteSettings['hideThemePicker'] ?? false) || ($siteSettings['themeMode'] ?? 'preset') === 'custom' ? '1' : '0' }}"
+>
 
 	@include('website.partials.preloader')
 	@include('website.partials.grid-lines')
 	@include('website.partials.header')
 
 	@yield('content')
+
+	@if (!request()->routeIs('website.home', 'home'))
+		@include('website.partials.newsletter-bar')
+	@endif
 
 	@include('website.partials.footer')
 

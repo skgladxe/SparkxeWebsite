@@ -151,6 +151,26 @@
 	min-height: 300px;
 }
 
+.product-item-image {
+	margin-bottom: 20px;
+	border-radius: 12px;
+	overflow: hidden;
+	aspect-ratio: 16 / 10;
+}
+
+.product-item-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.product-item-notes {
+	font-size: 13px;
+	opacity: 0.7;
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
 .service-item-header {
 	position: relative;
 	display: flex;

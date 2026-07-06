@@ -1,53 +1,71 @@
+<style>
+	.customer-image-box {
+		background-color: rgba(255, 255, 255, 0);
+		padding: 0;
+	}
+	.experience-counter-box {
+		background-color: rgba(255, 255, 255, 0);
+		padding: 0;
+	}
+</style>
+
+@if ($heroSlides->isNotEmpty())
 <!-- Hero -->
-	<section class="hero" id="home">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-6">
-					<div class="hero-content">
-						<div class="section-title dark-section">
-							<h3 class="wow fadeInUp">Innovation That Powers Growth</h3>
-							<h1 class="wow fadeInUp" data-wow-delay="0.2s">
-								<span>We're Sparkxe, </span>digital solutions for modern businesses
-							</h1>
-							<p class="wow fadeInUp" data-wow-delay="0.4s">
-								From digital marketing and custom software to mobile apps, e-commerce, and ERP systems — Sparkxe helps businesses launch, scale, and succeed online with strategy, design, and technology under one roof.
-							</p>
-						</div>
-						<div class="hero-body wow fadeInUp" data-wow-delay="0.6s">
-							<div class="hero-btn">
-								<a href="{{ route('website.contact') }}" class="btn-default">Get Started</a>
+<section class="hero hero-slider" id="home" data-slide-count="{{ $heroSlides->count() }}">
+	<div class="swiper">
+		<div class="swiper-wrapper">
+			@foreach ($heroSlides as $slide)
+				<div class="swiper-slide">
+					<div class="container">
+						<div class="row align-items-center">
+							<div class="col-lg-6">
+								<div class="hero-content">
+									<div class="section-title dark-section">
+										<h3 class="wow fadeInUp">{{ $slide->subtitle }}</h3>
+										<h1 class="wow fadeInUp" data-wow-delay="0.2s">
+											{!! $slide->renderedTitle() !!}
+										</h1>
+										<p class="wow fadeInUp" data-wow-delay="0.4s">{{ $slide->description }}</p>
+									</div>
+									<div class="hero-body wow fadeInUp" data-wow-delay="0.6s">
+										@if (filled($slide->primary_button_text))
+											<div class="hero-btn">
+												<a href="{{ $slide->buttonUrl($slide->primary_button_url) }}" class="btn-default">{{ $slide->primary_button_text }}</a>
+											</div>
+										@endif
+										@if (filled($slide->secondary_button_text) && filled($slide->secondary_button_url))
+											<div class="hero-btn btn-outline">
+												<a href="{{ $slide->buttonUrl($slide->secondary_button_url) }}" class="btn-default">{{ $slide->secondary_button_text }}</a>
+											</div>
+										@endif
+									</div>
+								</div>
 							</div>
-							<div class="video-play-button">
-								<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="popup-video" aria-label="Watch intro video">
-									<i class="fa-solid fa-play"></i>
-								</a>
-								<p>watch intro</p>
+							<div class="col-lg-6">
+								<div class="hero-image">
+									<div class="hero-img">
+										<img src="{{ $slide->mainImageUrl() }}" alt="{{ $slide->title }}">
+									</div>
+									@if ($slide->leftImageUrl())
+										<div class="customer-image-box">
+											<img style="width: 100%; height: 100%; object-fit: cover;" src="{{ $slide->leftImageUrl() }}" alt="">
+										</div>
+									@endif
+									@if ($slide->rightImageUrl())
+										<div class="experience-counter-box">
+											<img style="width: 100%; height: 100%; object-fit: cover;" src="{{ $slide->rightImageUrl() }}" alt="">
+										</div>
+									@endif
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6">
-					<div class="hero-image">
-						<div class="hero-img">
-							<img src="{{ asset('website/assets/images/hero-main.jpg') }}" alt="Sparkxe team collaborating on digital solutions">
-						</div>
-						<div class="customer-image-box">
-							<div class="customer-image-content"><h3>Trusted Clients</h3></div>
-							<div class="customer-experience-images">
-								<div class="customer-image"><figure class="image-anime"><img src="{{ asset('website/assets/images/clients/client-1.svg') }}" alt=""></figure></div>
-								<div class="customer-image"><figure class="image-anime"><img src="{{ asset('website/assets/images/clients/client-2.svg') }}" alt=""></figure></div>
-								<div class="customer-image"><figure class="image-anime"><img src="{{ asset('website/assets/images/clients/client-3.svg') }}" alt=""></figure></div>
-								<div class="customer-image"><figure class="image-anime"><img src="{{ asset('website/assets/images/clients/client-4.svg') }}" alt=""></figure></div>
-								<div class="customer-image"><figure class="image-anime"><img src="{{ asset('website/assets/images/clients/client-5.svg') }}" alt=""></figure></div>
-								<div class="customer-image add-more"><a href="{{ route('website.contact') }}" aria-label="View more"><i class="fa-solid fa-plus"></i></a></div>
-							</div>
-						</div>
-						<div class="experience-counter-box">
-							<h2><span class="counter">8</span>+</h2>
-							<p>years experience</p>
-						</div>
-					</div>
-				</div>
-			</div>
+			@endforeach
 		</div>
-	</section>
+		@if ($heroSlides->count() > 1)
+			<div class="swiper-pagination"></div>
+		@endif
+	</div>
+</section>
+@endif

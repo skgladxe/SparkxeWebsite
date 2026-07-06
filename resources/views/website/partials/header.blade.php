@@ -19,14 +19,17 @@
 								<li><a href="{{ route('website.about') }}">About</a></li>
 								<li><a href="{{ route('website.team') }}">Team</a></li>
 								<li class="mobile-has-sub">
-									<button type="button" class="mobile-sub-toggle">Solutions <i class="fa-solid fa-chevron-down"></i></button>
+									<button type="button" class="mobile-sub-toggle">Our Products <i class="fa-solid fa-chevron-down"></i></button>
 									<ul class="mobile-sub-menu">
-										<li><a href="{{ route('website.services.index') }}">All Services</a></li>
-										@foreach (\App\Support\WebsiteServices::mobileMenuServices() as $service)
-											<li><a href="{{ route('website.services.show', $service['slug']) }}">{{ $service['title'] }}</a></li>
+										<li><a href="{{ route('website.home') }}#services">All Products</a></li>
+										@foreach ($menuProducts ?? [] as $product)
+											@if ($product->slug)
+												<li><a href="{{ route('website.products.show', $product->slug) }}">{{ $product->title }}</a></li>
+											@endif
 										@endforeach
 									</ul>
 								</li>
+								<li><a href="{{ route('website.services.index') }}">Services</a></li>
 								<li><a href="{{ route('website.blog') }}">Blog</a></li>
 								<li><a href="{{ route('website.faq') }}">FAQ</a></li>
 								<li><a href="{{ route('website.contact') }}">Contact Us</a></li>
@@ -48,26 +51,36 @@
 									<li class="nav-item"><a class="nav-link" href="{{ route('website.team') }}">Team</a></li>
 
 									<li class="nav-item has-dropdown has-mega">
-										<a class="nav-link" href="{{ route('website.services.index') }}">Solutions <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+										<a class="nav-link" href="{{ route('website.home') }}#services">Our Products <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
 										<div class="mega-menu">
 											<div class="mega-menu-inner">
 												<div class="mega-feature">
 													<div class="mega-feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-													<h4>Full-Service Digital Partner</h4>
-													<p>Web, software, marketing &amp; design — everything your business needs to grow online.</p>
-													<a href="{{ route('website.services.index') }}">View all solutions <i class="fa-solid fa-arrow-right"></i></a>
+													<h4>Smart Digital Products</h4>
+													<p>Marketing, software, apps &amp; design — solutions built for real business growth.</p>
+													<a href="{{ route('website.home') }}#services">View all products <i class="fa-solid fa-arrow-right"></i></a>
 												</div>
 												<div class="mega-columns">
-													@foreach (\App\Support\WebsiteServices::megaMenuGroups() as $groupLabel => $services)
+													@php
+														$chunks = collect($menuProducts ?? [])->chunk(max(1, (int) ceil(max(1, ($menuProducts ?? collect())->count()) / 2)));
+													@endphp
+													@foreach ($chunks as $chunkIndex => $products)
 														<div class="mega-col">
-															<h5>{{ $groupLabel }}</h5>
+															@if ($chunkIndex === 0)
+																<h5>Our Products</h5>
+															@else
+																<h5>&nbsp;</h5>
+															@endif
 															<ul>
-																@foreach ($services as $service)
-																	<li>
-																		<a href="{{ route('website.services.show', $service['slug']) }}">
-																			<i class="{{ $service['icon'] }}"></i> {{ $service['title'] }}
-																		</a>
-																	</li>
+																@foreach ($products as $product)
+																	@if ($product->slug)
+																		<li>
+																			<a href="{{ route('website.products.show', $product->slug) }}">
+																				@if ($product->iconClass())<i class="{{ $product->iconClass() }}"></i>@endif
+																				{{ $product->title }}
+																			</a>
+																		</li>
+																	@endif
 																@endforeach
 															</ul>
 														</div>
@@ -77,6 +90,7 @@
 										</div>
 									</li>
 
+									<li class="nav-item"><a class="nav-link" href="{{ route('website.services.index') }}">Services</a></li>
 									<li class="nav-item"><a class="nav-link" href="{{ route('website.blog') }}">Blog</a></li>
 									<li class="nav-item"><a class="nav-link" href="{{ route('website.faq') }}">FAQ</a></li>
 									<li class="nav-item"><a class="nav-link" href="{{ route('website.contact') }}">Contact Us</a></li>

@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class TeamMember extends Model
 {
     protected $fillable = [
-        'name', 'role', 'photo', 'linkedin', 'twitter', 'github', 'dribbble', 'instagram', 'sort_order', 'is_active',
+        'name',
+        'role',
+        'description',
+        'notes',
+        'photo',
+        'sort_order',
+        'is_active',
     ];
 
     protected function casts(): array
@@ -28,5 +34,24 @@ class TeamMember extends Model
     public function initial(): string
     {
         return strtoupper(substr($this->name, 0, 1));
+    }
+
+    public function renderedNotes(): ?string
+    {
+        if (blank($this->notes)) {
+            return null;
+        }
+
+        return preg_replace(
+            [
+                '/\sstyle=("|\')(.*?)\1/i',
+                '/\scontenteditable=("|\')(.*?)\1/i',
+                '/\sspellcheck=("|\')(.*?)\1/i',
+                '/\sid=("|\')(.*?)\1/i',
+                '/\sdata-[a-z0-9\-_]+=("|\\\')(.*?)\1/i',
+            ],
+            '',
+            $this->notes
+        );
     }
 }

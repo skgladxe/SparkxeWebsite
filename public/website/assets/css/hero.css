@@ -24,6 +24,36 @@
 	display: inline-block;
 }
 
+.hero-btn.btn-outline .btn-default {
+	background: transparent;
+	border: 1px solid var(--divider-color);
+	color: var(--primary-color);
+}
+
+.hero-btn.btn-outline .btn-default:hover {
+	border-color: var(--accent-secondary-color);
+	color: var(--accent-secondary-color);
+	background: transparent;
+	background-size: auto;
+}
+
+.hero-slider .swiper-pagination {
+	position: relative;
+	margin-top: 32px;
+	text-align: center;
+}
+
+.hero-slider .swiper-pagination-bullet {
+	width: 10px;
+	height: 10px;
+	background: var(--divider-color);
+	opacity: 1;
+}
+
+.hero-slider .swiper-pagination-bullet-active {
+	background: var(--accent-secondary-color);
+}
+
 .hero-body .video-play-button {
 	display: inline-flex;
 	align-items: center;

@@ -43,7 +43,7 @@
 						</div>
 						<select name="service" required>
 							<option value="">Select a Service</option>
-							@foreach (config('website.services') as $service)
+							@foreach (\App\Support\WebsiteServices::all() as $service)
 								<option value="{{ $service['slug'] }}" @selected($selectedService === $service['slug'])>{{ $service['title'] }}</option>
 							@endforeach
 							<option value="other" @selected($selectedService === 'other')>Other</option>

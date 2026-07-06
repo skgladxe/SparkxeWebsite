@@ -1,9 +1,8 @@
 @props([
-    'icon',
+    'icon' => null,
     'title',
     'subtitle',
     'slug',
-    'counter' => 98,
     'delay' => '0s',
 ])
 
@@ -15,13 +14,14 @@
 	<a href="{{ $href }}" class="tool-item-link wow fadeInUp" data-wow-delay="{{ $delay }}">
 		<div class="tool-item">
 			<div class="tool-item-box">
-				<div class="icon-box"><i class="{{ $icon }}"></i></div>
+				@if ($icon)
+					<div class="icon-box"><i class="{{ $icon }}"></i></div>
+				@endif
 				<div class="tool-item-content">
 					<h3>{{ $title }}</h3>
 					<p>{{ $subtitle }}</p>
 				</div>
 			</div>
-			<div class="tool-item-counter"><h2><span class="counter" data-count="{{ $counter }}">0</span>%</h2></div>
 		</div>
 	</a>
 </div>

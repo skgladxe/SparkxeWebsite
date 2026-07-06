@@ -2,11 +2,18 @@
 
 namespace App\Support;
 
+use App\Models\Service;
+
 class WebsiteServices
 {
     public static function all(): array
     {
-        return config('website.services', []);
+        return Service::query()->active()->get()->map(fn (Service $service) => [
+            'slug' => $service->slug,
+            'title' => $service->title,
+            'subtitle' => $service->subtitle,
+            'icon' => $service->iconClass(),
+        ])->all();
     }
 
     public static function find(string $slug): ?array
@@ -18,46 +25,6 @@ class WebsiteServices
         }
 
         return null;
-    }
-
-    public static function related(string $slug, int $limit = 3): array
-    {
-        $current = self::find($slug);
-
-        if ($current === null) {
-            return [];
-        }
-
-        $sameCategory = array_values(array_filter(
-            self::all(),
-            fn (array $service) => $service['slug'] !== $slug && $service['category'] === $current['category']
-        ));
-
-        $others = array_values(array_filter(
-            self::all(),
-            fn (array $service) => $service['slug'] !== $slug && $service['category'] !== $current['category']
-        ));
-
-        return array_slice(array_merge($sameCategory, $others), 0, $limit);
-    }
-
-    public static function megaMenuGroups(): array
-    {
-        $groups = config('website.service_mega_menu', []);
-        $result = [];
-
-        foreach ($groups as $label => $categories) {
-            $services = array_values(array_filter(
-                self::all(),
-                fn (array $service) => in_array($service['category'], $categories, true)
-            ));
-
-            if ($services !== []) {
-                $result[$label] = $services;
-            }
-        }
-
-        return $result;
     }
 
     public static function footerServices(int $limit = 5): array

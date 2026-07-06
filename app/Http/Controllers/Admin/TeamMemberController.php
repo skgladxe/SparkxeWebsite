@@ -67,12 +67,9 @@ class TeamMemberController extends Controller
         return $request->validate([
             'name' => ['required', 'string', 'max:150'],
             'role' => ['required', 'string', 'max:150'],
+            'description' => ['nullable', 'string', 'max:2000'],
+            'notes' => ['nullable', 'string'],
             'photo' => ['nullable', 'image', 'max:5120'],
-            'linkedin' => ['nullable', 'url', 'max:500'],
-            'twitter' => ['nullable', 'url', 'max:500'],
-            'github' => ['nullable', 'url', 'max:500'],
-            'dribbble' => ['nullable', 'url', 'max:500'],
-            'instagram' => ['nullable', 'url', 'max:500'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
         ]) + [

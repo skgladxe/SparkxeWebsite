@@ -5,9 +5,9 @@
 
 @section('content')
 	@include('website.partials.page-hero', [
-		'eyebrow' => 'Our Services',
-		'title' => 'Everything your business needs to win online',
-		'highlight' => 'win online',
+		'eyebrow' => $section['eyebrow'],
+		'title' => $section['title'],
+		'highlight' => $section['highlight'],
 		'description' => 'From digital marketing and custom software to branding and hosting — Sparkxe delivers end-to-end solutions under one roof.',
 		'breadcrumbs' => [
 			['label' => 'Home', 'url' => route('website.home')],
@@ -18,13 +18,12 @@
 	<section class="our-tools services-index-page">
 		<div class="container">
 			<div class="row">
-				@foreach (config('website.services') as $index => $service)
+				@foreach ($services as $index => $service)
 					<x-website::service-grid-card
-						:icon="$service['icon']"
-						:title="$service['title']"
-						:subtitle="$service['subtitle']"
-						:slug="$service['slug']"
-						:counter="$service['counter']"
+						:icon="$service->iconClass()"
+						:title="$service->title"
+						:subtitle="$service->subtitle"
+						:slug="$service->slug"
 						:delay="($index * 0.05).'s'"
 					/>
 				@endforeach

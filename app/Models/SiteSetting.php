@@ -36,4 +36,47 @@ class SiteSetting extends Model
 
         return asset('website/assets/images/logo.svg');
     }
+
+    public static function websiteSettings(): array
+    {
+        $themeMode = static::get('theme_mode', 'preset');
+        $themePreset = static::get('theme_preset', config('website.default_theme'));
+
+        return [
+            'themeMode' => $themeMode,
+            'themePreset' => $themePreset,
+            'bodyTheme' => $themeMode === 'custom' ? 'custom' : $themePreset,
+            'heroVisible' => static::get('section_hero_visible', '1') === '1',
+            'productsVisible' => static::get('section_products_visible', '1') === '1',
+            'hideThemePicker' => static::get('hide_theme_picker', '0') === '1',
+            'themeAccentColor' => static::get('theme_accent_color', '#F0FF6C'),
+            'themeAccentSecondaryColor' => static::get('theme_accent_secondary_color', '#6BFDD9'),
+            'themeBlackColor' => static::get('theme_black_color', '#163031'),
+            'themePrimaryColor' => static::get('theme_primary_color', '#F8F8F8'),
+        ];
+    }
+
+    public static function defaultPageHeaderImageUrl(): ?string
+    {
+        $path = static::get('default_page_header_image');
+
+        if (blank($path)) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return asset('storage/'.$path);
+    }
+
+    public static function servicesSection(): array
+    {
+        return [
+            'eyebrow' => static::get('services_section_eyebrow', 'Our Services'),
+            'title' => static::get('services_section_title', 'Everything your business needs to win online'),
+            'highlight' => static::get('services_section_title_highlight', 'win online'),
+        ];
+    }
 }

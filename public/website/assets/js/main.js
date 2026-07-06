@@ -19,21 +19,48 @@
 
 	/* Theme picker — 10 variants */
 	var themes = ["spark", "ocean", "sunset", "violet", "forest", "rose", "midnight", "copper", "arctic", "neon"];
+	var themeLocked = $body.attr("data-theme-locked") === "1";
 	var savedTheme = localStorage.getItem("sparkxe-theme");
 
-	if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+	if (!themeLocked && savedTheme && themes.indexOf(savedTheme) !== -1) {
 		$body.attr("data-theme", savedTheme);
 		$(".theme-dot").removeClass("active");
 		$('.theme-dot[data-theme="' + savedTheme + '"]').addClass("active");
 	}
 
-	$(".theme-dot").on("click", function () {
-		var theme = $(this).data("theme");
-		$body.attr("data-theme", theme);
-		$(".theme-dot").removeClass("active");
-		$(this).addClass("active");
-		localStorage.setItem("sparkxe-theme", theme);
-	});
+	if (!themeLocked) {
+		$(".theme-dot").on("click", function () {
+			var theme = $(this).data("theme");
+			$body.attr("data-theme", theme);
+			$(".theme-dot").removeClass("active");
+			$(this).addClass("active");
+			localStorage.setItem("sparkxe-theme", theme);
+		});
+	}
+
+	/* Hero Slider */
+	if ($(".hero-slider .swiper").length) {
+		var slideCount = parseInt($(".hero-slider").data("slide-count"), 10) || 1;
+		var heroConfig = {
+			slidesPerView: 1,
+			speed: 800,
+			spaceBetween: 0,
+			loop: slideCount > 1
+		};
+
+		if (slideCount > 1) {
+			heroConfig.autoplay = {
+				delay: 5000,
+				disableOnInteraction: false
+			};
+			heroConfig.pagination = {
+				el: ".hero-slider .swiper-pagination",
+				clickable: true
+			};
+		}
+
+		new Swiper(".hero-slider .swiper", heroConfig);
+	}
 
 	/* Custom Mobile Menu */
 	var $mobileBtn = $(".mobile-menu-btn");

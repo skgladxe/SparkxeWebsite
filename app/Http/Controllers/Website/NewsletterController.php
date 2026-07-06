@@ -12,11 +12,22 @@ class NewsletterController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'email' => ['required', 'email', 'max:255', 'unique:newsletter_subscribers,email'],
+            'mobile_number' => ['nullable', 'string', 'max:30'],
+            'email' => ['nullable', 'email', 'max:255', 'unique:newsletter_subscribers,email'],
         ]);
 
+        if (blank($validated['mobile_number'] ?? null) && blank($validated['email'] ?? null)) {
+            return response()->json([
+                'message' => 'Enter a mobile number or email address.',
+                'errors' => [
+                    'mobile_number' => ['Enter a mobile number or email address.'],
+                ],
+            ], 422);
+        }
+
         NewsletterSubscriber::create([
-            'email' => $validated['email'],
+            'mobile_number' => $validated['mobile_number'] ?? null,
+            'email' => $validated['email'] ?? null,
             'subscribed_at' => now(),
         ]);
 

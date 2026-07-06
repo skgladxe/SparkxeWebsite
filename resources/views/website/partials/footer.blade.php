@@ -12,16 +12,6 @@
 							<a href="{{ config('website.social.instagram') }}" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
 							<a href="{{ config('website.social.linkedin') }}" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
 						</div>
-						<div class="footer-newsletter mt-4">
-							<h4>Get digital tips in your inbox</h4>
-							<p class="mb-2">Subscribe for marketing insights and tech updates from Sparkxe.</p>
-							<form class="newsletter-form footer-newsletter-form" id="newsletterForm" action="{{ route('website.newsletter.store') }}" method="POST">
-								@csrf
-								<input type="email" name="email" placeholder="Your email address" required>
-								<button type="submit" class="btn-default">Subscribe</button>
-							</form>
-							<p class="newsletter-message small mt-2 mb-0" id="newsletterMessage" hidden></p>
-						</div>
 					</div>
 					<div class="footer-col">
 						<h4>Solutions</h4>

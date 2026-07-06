@@ -4,8 +4,12 @@ use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ContactSubmissionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EditorUploadController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\NewsletterSubscriberController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TeamMemberController;
@@ -28,6 +32,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('blogs', BlogController::class)->except(['show']);
     Route::resource('team', TeamMemberController::class)->except(['show'])->parameters(['team' => 'team']);
     Route::resource('faqs', FaqController::class)->except(['show']);
+    Route::resource('hero-slides', HeroSlideController::class)->except(['show'])->parameters(['hero-slides' => 'heroSlide']);
+    Route::resource('products', ProductController::class)->except(['show']);
+    Route::resource('services', ServiceController::class)->except(['show']);
+
+    Route::post('editor/upload', [EditorUploadController::class, 'store'])->name('editor.upload');
     Route::resource('contacts', ContactSubmissionController::class)->only(['index', 'show', 'update', 'destroy']);
     Route::get('newsletter-subscribers', [NewsletterSubscriberController::class, 'index'])->name('newsletter-subscribers.index');
 

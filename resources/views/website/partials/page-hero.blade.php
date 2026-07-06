@@ -4,9 +4,14 @@
     'highlight' => null,
     'description' => null,
     'breadcrumbs' => [],
+    'headerImage' => null,
 ])
 
-<section class="page-hero">
+@php
+	$headerImage = $headerImage ?? \App\Models\SiteSetting::defaultPageHeaderImageUrl();
+@endphp
+
+<section @class(['page-hero', 'page-hero-has-image' => filled($headerImage)]) @if($headerImage) style="background-image: url('{{ $headerImage }}');" @endif>
 	<div class="container">
 		@if (count($breadcrumbs))
 			<x-website::breadcrumb :items="$breadcrumbs" />

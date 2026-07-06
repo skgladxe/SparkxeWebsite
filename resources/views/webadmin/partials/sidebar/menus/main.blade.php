@@ -6,6 +6,9 @@
 
 @include('webadmin.partials.sidebar.menu-group', ['label' => 'Content', 'divider' => true])
 
+<x-webadmin::sidebar.menu-item :href="route('admin.hero-slides.index')" title="Hero Slides" icon="fi fi-rr-picture" />
+<x-webadmin::sidebar.menu-item :href="route('admin.products.index')" title="Our Products" icon="fi fi-rr-box" />
+<x-webadmin::sidebar.menu-item :href="route('admin.services.index')" title="Our Services" icon="fi fi-rr-settings-sliders" />
 <x-webadmin::sidebar.menu-item :href="route('admin.blog-categories.index')" title="Blog Categories" icon="fi fi-rr-tags" />
 <x-webadmin::sidebar.menu-item :href="route('admin.blogs.index')" title="Blog Posts" icon="fi fi-rr-blog-text" />
 <x-webadmin::sidebar.menu-item :href="route('admin.team.index')" title="Team" icon="fi fi-rr-users" />

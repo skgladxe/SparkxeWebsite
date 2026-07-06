@@ -154,3 +154,19 @@
 	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
 	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
 }
+
+/* Custom admin theme — overridden by inline styles from theme-vars partial */
+[data-theme="custom"] {
+	--primary-color: #F8F8F8;
+	--secondary-color: #FFFFFF0A;
+	--text-color: #F8F8F8;
+	--accent-color: #F0FF6C;
+	--accent-secondary-color: #6BFDD9;
+	--black-color: #163031;
+	--divider-color: #FFFFFF0F;
+	--dark-divider-color: #16151324;
+	--error-color: rgb(230, 87, 87);
+	--nav-shell-bg: rgba(22, 48, 49, 0.96);
+	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
+	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
+}

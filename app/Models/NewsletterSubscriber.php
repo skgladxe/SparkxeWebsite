@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class NewsletterSubscriber extends Model
 {
     protected $fillable = [
+        'mobile_number',
         'email',
         'subscribed_at',
     ];

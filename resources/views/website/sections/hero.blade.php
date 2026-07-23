@@ -11,7 +11,7 @@
 
 @if ($heroSlides->isNotEmpty())
 <!-- Hero -->
-<section class="hero hero-slider" id="home" data-slide-count="{{ $heroSlides->count() }}">
+<section class="hero hero-slider mt-4" id="home" data-slide-count="{{ $heroSlides->count() }}">
 	<div class="swiper">
 		<div class="swiper-wrapper">
 			@foreach ($heroSlides as $slide)

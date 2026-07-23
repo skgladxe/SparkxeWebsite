@@ -5,11 +5,55 @@
 	<x-webadmin::page-breadcrumb title="Logo & Settings" :home-url="route('admin.dashboard')" />
 	@include('webadmin.partials.alerts')
 	<div class="card mb-4"><div class="card-body">
-		<h5 class="card-title mb-3">Logo</h5>
 		<form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" id="settingsForm">@csrf @method('PUT')
-			<div class="mb-3"><label class="form-label">Current Logo</label><div><img src="{{ $logoUrl }}" alt="Logo" height="48" class="border rounded p-2"></div></div>
-			<div class="mb-3"><label class="form-label">Upload New Logo</label><input type="file" name="logo" class="form-control" accept="image/*"></div>
-			<p class="text-muted small">Recommended: SVG or PNG with transparent background.</p>
+
+			<h5 class="card-title mb-3">Website Branding</h5>
+			<div class="row g-4 mb-4">
+				<div class="col-md-4">
+					<label class="form-label">Nav Logo</label>
+					<div class="mb-2"><img src="{{ $websiteNavLogoUrl }}" alt="Nav Logo" height="48" class="border rounded p-2 bg-white"></div>
+					<input type="file" name="website_nav_logo" class="form-control" accept="image/*">
+					<p class="text-muted small mt-1">Used in the website header navigation.</p>
+				</div>
+				<div class="col-md-4">
+					<label class="form-label">Footer Logo</label>
+					<div class="mb-2"><img src="{{ $websiteFooterLogoUrl }}" alt="Footer Logo" height="48" class="border rounded p-2 bg-white"></div>
+					<input type="file" name="website_footer_logo" class="form-control" accept="image/*">
+					<p class="text-muted small mt-1">Used in the website footer. Falls back to nav logo if empty.</p>
+				</div>
+				<div class="col-md-4">
+					<label class="form-label">Favicon</label>
+					<div class="mb-2"><img src="{{ $websiteFaviconUrl }}" alt="Favicon" height="32" class="border rounded p-1 bg-white"></div>
+					<input type="file" name="website_favicon" class="form-control" accept="image/*,.ico">
+					<p class="text-muted small mt-1">Browser tab icon for the website. PNG, SVG, or ICO.</p>
+				</div>
+			</div>
+
+			<hr class="my-4">
+			<h5 class="card-title mb-3">Admin Branding</h5>
+			<div class="row g-4 mb-4">
+				<div class="col-md-4">
+					<label class="form-label">Admin Logo</label>
+					<div class="mb-2"><img src="{{ $adminLogoUrl }}" alt="Admin Logo" height="48" class="border rounded p-2 bg-white"></div>
+					<input type="file" name="admin_logo" class="form-control" accept="image/*">
+					<p class="text-muted small mt-1">Used in the admin sidebar and login page.</p>
+				</div>
+				<div class="col-md-4">
+					<label class="form-label">Admin Favicon</label>
+					<div class="mb-2"><img src="{{ $adminFaviconUrl }}" alt="Admin Favicon" height="32" class="border rounded p-1 bg-white"></div>
+					<input type="file" name="admin_favicon" class="form-control" accept="image/*,.ico">
+					<p class="text-muted small mt-1">Browser tab icon for the admin panel.</p>
+				</div>
+				<div class="col-md-4">
+					<label class="form-label">Admin Logo Text</label>
+					@if($adminLogoTextImageUrl)
+						<div class="mb-2"><img src="{{ $adminLogoTextImageUrl }}" alt="Logo Text Image" height="36" class="border rounded p-2 bg-white"></div>
+					@endif
+					<input type="file" name="admin_logo_text_image" class="form-control mb-2" accept="image/*">
+					<input type="text" name="admin_logo_text" class="form-control" value="{{ old('admin_logo_text', $settings['admin_logo_text']) }}" placeholder="{{ config('webadmin.name') }}">
+					<p class="text-muted small mt-1">Upload a text/wordmark image, or enter brand name text. Image is shown in the sidebar when uploaded.</p>
+				</div>
+			</div>
 
 			<hr class="my-4">
 			<h5 class="card-title mb-3">Theme Colors</h5>

@@ -10,6 +10,7 @@ use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use App\Services\SeoService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -29,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFive();
+
         Blade::anonymousComponentPath(
             resource_path('views/website/components'),
             'website'
@@ -41,8 +44,17 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('website.*', function ($view) {
             $view->with('seo', app(SeoService::class)->resolveForRequest());
-            $view->with('siteLogoUrl', SiteSetting::logoUrl());
+            $view->with('siteLogoUrl', SiteSetting::websiteNavLogoUrl());
+            $view->with('siteFooterLogoUrl', SiteSetting::websiteFooterLogoUrl());
+            $view->with('siteFaviconUrl', SiteSetting::websiteFaviconUrl());
             $view->with('siteSettings', SiteSetting::websiteSettings());
+        });
+
+        View::composer('webadmin.*', function ($view) {
+            $view->with('adminLogoUrl', SiteSetting::adminLogoUrl());
+            $view->with('adminFaviconUrl', SiteSetting::adminFaviconUrl());
+            $view->with('adminLogoText', SiteSetting::adminLogoText());
+            $view->with('adminLogoTextImageUrl', SiteSetting::adminLogoTextImageUrl());
         });
 
         View::composer('website.sections.hero', function ($view) {

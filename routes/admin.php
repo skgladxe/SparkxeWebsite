@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\NewsletterSubscriberController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\SiteSettingController;
@@ -26,6 +27,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout.get');
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile/password', [ProfileController::class, 'editPassword'])->name('profile.password.edit');
+    Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
     Route::resource('users', UserController::class)->except(['show']);
     Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);

@@ -15,7 +15,7 @@ class BlogCategoryController extends Controller
     public function index(): View
     {
         return view('webadmin.blog-categories.index', [
-            'categories' => BlogCategory::query()->orderBy('sort_order')->orderBy('name')->get(),
+            'categories' => BlogCategory::query()->orderBy('sort_order')->orderBy('name')->paginate(15),
         ]);
     }
 

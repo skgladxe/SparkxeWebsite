@@ -11,7 +11,7 @@ class NewsletterSubscriberController extends Controller
     public function index(): View
     {
         return view('webadmin.newsletter-subscribers.index', [
-            'subscribers' => NewsletterSubscriber::query()->latest('subscribed_at')->get(),
+            'subscribers' => NewsletterSubscriber::query()->latest('subscribed_at')->paginate(15),
         ]);
     }
 }

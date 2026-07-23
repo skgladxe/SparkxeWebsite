@@ -8,12 +8,28 @@
 	</div>
 	@include('webadmin.partials.alerts')
 	<div class="card"><div class="card-body table-responsive">
-		<table class="table"><thead><tr><th>Question</th><th>Active</th><th>Open</th><th></th></tr></thead><tbody>
-		@foreach($faqs as $faq)
-		<tr><td>{{ Str::limit($faq->question, 80) }}</td><td>{{ $faq->is_active ? 'Yes' : 'No' }}</td><td>{{ $faq->is_open_default ? 'Yes' : 'No' }}</td>
-		<td class="text-end"><a href="{{ route('admin.faqs.edit', $faq) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-		<form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger">Delete</button></form></td></tr>
-		@endforeach</tbody></table>
+		<table class="table">
+			<thead><tr><th>S.No</th><th>Question</th><th>Active</th><th>Open</th><th></th></tr></thead>
+			<tbody>
+			@forelse($faqs as $faq)
+			<tr>
+				<td>{{ $faqs->firstItem() + $loop->index }}</td>
+				<td>{{ Str::limit($faq->question, 80) }}</td>
+				<td>{{ $faq->is_active ? 'Yes' : 'No' }}</td>
+				<td>{{ $faq->is_open_default ? 'Yes' : 'No' }}</td>
+				<td class="text-end">
+					<div class="table-actions">
+						<a href="{{ route('admin.faqs.edit', $faq) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+						<form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button></form>
+					</div>
+				</td>
+			</tr>
+			@empty
+			<tr><td colspan="5" class="text-muted">No FAQs yet.</td></tr>
+			@endforelse
+			</tbody>
+		</table>
+		@include('webadmin.partials.table-pagination', ['paginator' => $faqs])
 	</div></div>
 </div>
 @endsection

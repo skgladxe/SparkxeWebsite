@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -14,7 +15,7 @@ class ServiceController extends Controller
     public function index(): View
     {
         return view('webadmin.services.index', [
-            'services' => Service::query()->orderBy('sort_order')->get(),
+            'services' => Service::query()->orderBy('sort_order')->paginate(15),
         ]);
     }
 
@@ -27,10 +28,8 @@ class ServiceController extends Controller
     {
         $validated = $this->validateService($request);
 
-        foreach (['image'] as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('services', 'public');
-            }
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('services', 'public');
         }
 
         if (blank($validated['slug'] ?? null)) {
@@ -51,12 +50,14 @@ class ServiceController extends Controller
     {
         $validated = $this->validateService($request, $service);
 
-        foreach (['image'] as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('services', 'public');
-            } else {
-                unset($validated[$field]);
-            }
+        if ($request->hasFile('image')) {
+            $this->deleteStoredImage($service->image);
+            $validated['image'] = $request->file('image')->store('services', 'public');
+        } elseif ($request->boolean('remove_image')) {
+            $this->deleteStoredImage($service->image);
+            $validated['image'] = null;
+        } else {
+            unset($validated['image']);
         }
 
         $service->update($validated);
@@ -66,9 +67,17 @@ class ServiceController extends Controller
 
     public function destroy(Service $service): RedirectResponse
     {
+        $this->deleteStoredImage($service->image);
         $service->delete();
 
         return redirect()->route('admin.services.index')->with('success', 'Service deleted.');
+    }
+
+    private function deleteStoredImage(?string $path): void
+    {
+        if (filled($path) && ! str_starts_with($path, 'http')) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function validateService(Request $request, ?Service $service = null): array

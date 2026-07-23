@@ -8,18 +8,32 @@
 	</div>
 	@include('webadmin.partials.alerts')
 	<div class="card"><div class="card-body table-responsive">
-		<table class="table table-hover"><thead><tr><th>Name</th><th>Email</th><th></th></tr></thead><tbody>
-		@foreach($users as $user)
-		<tr><td>{{ $user->name }}</td><td>{{ $user->email }}</td>
-		<td class="text-end">
-			<a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-			@if($user->id !== auth()->id())
-			<form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')
-			<button class="btn btn-sm btn-outline-danger">Delete</button></form>
-			@endif
-		</td></tr>
-		@endforeach
-		</tbody></table>
+		<table class="table table-hover">
+			<thead><tr><th>S.No</th><th>Photo</th><th>Name</th><th>Email</th><th>Role</th><th></th></tr></thead>
+			<tbody>
+			@forelse($users as $user)
+			<tr>
+				<td>{{ $users->firstItem() + $loop->index }}</td>
+				<td><img src="{{ $user->avatarUrl() }}" width="36" height="36" class="rounded-circle object-fit-cover" alt=""></td>
+				<td>{{ $user->name }}</td>
+				<td>{{ $user->email }}</td>
+				<td>{{ $user->roleLabel() }}</td>
+				<td class="text-end">
+					<div class="table-actions">
+						<a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+						@if($user->id !== auth()->id())
+						<form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')
+						<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button></form>
+						@endif
+					</div>
+				</td>
+			</tr>
+			@empty
+			<tr><td colspan="6" class="text-muted">No users yet.</td></tr>
+			@endforelse
+			</tbody>
+		</table>
+		@include('webadmin.partials.table-pagination', ['paginator' => $users])
 	</div></div>
 </div>
 @endsection

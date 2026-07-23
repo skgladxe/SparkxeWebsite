@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SiteSettingController extends Controller
@@ -13,7 +14,12 @@ class SiteSettingController extends Controller
     public function edit(): View
     {
         return view('webadmin.settings.edit', [
-            'logoUrl' => SiteSetting::logoUrl(),
+            'websiteNavLogoUrl' => SiteSetting::websiteNavLogoUrl(),
+            'websiteFooterLogoUrl' => SiteSetting::websiteFooterLogoUrl(),
+            'websiteFaviconUrl' => SiteSetting::websiteFaviconUrl(),
+            'adminLogoUrl' => SiteSetting::adminLogoUrl(),
+            'adminFaviconUrl' => SiteSetting::adminFaviconUrl(),
+            'adminLogoTextImageUrl' => SiteSetting::adminLogoTextImageUrl(),
             'settings' => $this->currentSettings(),
             'themes' => config('website.themes'),
             'defaultHeaderImageUrl' => SiteSetting::defaultPageHeaderImageUrl(),
@@ -23,7 +29,13 @@ class SiteSettingController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $request->validate([
-            'logo' => ['nullable', 'image', 'max:5120'],
+            'website_nav_logo' => ['nullable', 'image', 'max:5120'],
+            'website_footer_logo' => ['nullable', 'image', 'max:5120'],
+            'website_favicon' => ['nullable', 'image', 'max:2048'],
+            'admin_logo' => ['nullable', 'image', 'max:5120'],
+            'admin_favicon' => ['nullable', 'image', 'max:2048'],
+            'admin_logo_text' => ['nullable', 'string', 'max:100'],
+            'admin_logo_text_image' => ['nullable', 'image', 'max:5120'],
             'default_page_header_image' => ['nullable', 'image', 'max:5120'],
             'theme_mode' => ['required', 'in:preset,custom'],
             'theme_preset' => ['required_if:theme_mode,preset', 'string', 'in:'.implode(',', array_keys(config('website.themes')))],
@@ -36,8 +48,15 @@ class SiteSettingController extends Controller
             'services_section_title_highlight' => ['nullable', 'string', 'max:255'],
         ]);
 
-        if ($request->hasFile('logo')) {
-            SiteSetting::set('logo', $request->file('logo')->store('settings', 'public'));
+        $this->storeUploadedImage($request, 'website_nav_logo');
+        $this->storeUploadedImage($request, 'website_footer_logo');
+        $this->storeUploadedImage($request, 'website_favicon');
+        $this->storeUploadedImage($request, 'admin_logo');
+        $this->storeUploadedImage($request, 'admin_favicon');
+        $this->storeUploadedImage($request, 'admin_logo_text_image');
+
+        if ($request->has('admin_logo_text')) {
+            SiteSetting::set('admin_logo_text', $request->input('admin_logo_text'));
         }
 
         if ($request->hasFile('default_page_header_image')) {
@@ -60,9 +79,24 @@ class SiteSettingController extends Controller
         return redirect()->route('admin.settings.edit')->with('success', 'Settings updated.');
     }
 
+    private function storeUploadedImage(Request $request, string $key): void
+    {
+        if (! $request->hasFile($key)) {
+            return;
+        }
+
+        $oldPath = SiteSetting::get($key);
+        if (filled($oldPath) && ! str_starts_with($oldPath, 'http')) {
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        SiteSetting::set($key, $request->file($key)->store('settings', 'public'));
+    }
+
     private function currentSettings(): array
     {
         return [
+            'admin_logo_text' => SiteSetting::adminLogoText(),
             'theme_mode' => SiteSetting::get('theme_mode', 'preset'),
             'theme_preset' => SiteSetting::get('theme_preset', config('website.default_theme')),
             'theme_accent_color' => SiteSetting::get('theme_accent_color', '#F0FF6C'),

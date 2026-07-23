@@ -13,7 +13,7 @@ class TeamMemberController extends Controller
     public function index(): View
     {
         return view('webadmin.team.index', [
-            'members' => TeamMember::query()->orderBy('sort_order')->get(),
+            'members' => TeamMember::query()->orderBy('sort_order')->paginate(15),
         ]);
     }
 

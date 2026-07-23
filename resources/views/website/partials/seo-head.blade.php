@@ -5,7 +5,7 @@
     $canonicalUrl = $seo->canonical_url_resolved ?? $seo->canonical_url ?? url()->current();
     $ogTitle = $seo->og_title ?? $metaTitle;
     $ogDescription = $seo->og_description ?? $metaDescription;
-    $ogImage = $seo->og_image_url ?? asset('website/assets/images/logo.svg');
+    $ogImage = $seo->og_image_url ?? ($siteLogoUrl ?? \App\Models\SiteSetting::websiteNavLogoUrl());
 @endphp
 
 <title>{{ e($metaTitle) }}</title>

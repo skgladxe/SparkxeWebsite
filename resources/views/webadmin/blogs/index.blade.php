@@ -8,19 +8,29 @@
 	</div>
 	@include('webadmin.partials.alerts')
 	<div class="card"><div class="card-body table-responsive">
-		<table class="table"><thead><tr><th>Title</th><th>Category</th><th>Published</th><th></th></tr></thead><tbody>
-		@foreach($blogs as $blog)
-		<tr>
-			<td>{{ $blog->title }}</td>
-			<td>{{ $blog->category?->name ?? '—' }}</td>
-			<td><span class="badge {{ $blog->is_published ? 'bg-success' : 'bg-secondary' }}">{{ $blog->is_published ? 'Yes' : 'Draft' }}</span></td>
-			<td class="text-end">
-				<a href="{{ route('website.blog.show', $blog->slug) }}" class="btn btn-sm btn-outline-secondary" target="_blank">View</a>
-				<a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-				<form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger">Delete</button></form>
-			</td>
-		</tr>
-		@endforeach</tbody></table>
+		<table class="table">
+			<thead><tr><th>S.No</th><th>Title</th><th>Category</th><th>Published</th><th></th></tr></thead>
+			<tbody>
+			@forelse($blogs as $blog)
+			<tr>
+				<td>{{ $blogs->firstItem() + $loop->index }}</td>
+				<td>{{ $blog->title }}</td>
+				<td>{{ $blog->category?->name ?? '—' }}</td>
+				<td><span class="badge {{ $blog->is_published ? 'bg-success' : 'bg-secondary' }}">{{ $blog->is_published ? 'Yes' : 'Draft' }}</span></td>
+				<td class="text-end">
+					<div class="table-actions">
+						<a href="{{ route('website.blog.show', $blog->slug) }}" class="btn btn-sm btn-outline-secondary" target="_blank">View</a>
+						<a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+						<form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button></form>
+					</div>
+				</td>
+			</tr>
+			@empty
+			<tr><td colspan="5" class="text-muted">No blog posts yet.</td></tr>
+			@endforelse
+			</tbody>
+		</table>
+		@include('webadmin.partials.table-pagination', ['paginator' => $blogs])
 	</div></div>
 </div>
 @endsection

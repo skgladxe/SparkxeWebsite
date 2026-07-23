@@ -14,7 +14,7 @@ class ContactSubmissionController extends Controller
     public function index(): View
     {
         return view('webadmin.contacts.index', [
-            'contacts' => ContactSubmission::query()->latest()->get(),
+            'contacts' => ContactSubmission::query()->latest()->paginate(15),
         ]);
     }
 

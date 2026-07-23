@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
 	@include('webadmin.partials.head')
-	<title>@yield('title', config('webadmin.name'))</title>
+	<title>@yield('title', $adminLogoText ?? \App\Models\SiteSetting::adminLogoText())</title>
 </head>
 <body>
 	<div class="page-layout">
 		@include('webadmin.partials.header')
-		@include('webadmin.partials.search-modal')
 		@include('webadmin.partials.sidebar')
 		@include('webadmin.partials.add-customer-modal')
 

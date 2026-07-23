@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -14,7 +15,7 @@ class ProductController extends Controller
     public function index(): View
     {
         return view('webadmin.products.index', [
-            'products' => Product::query()->orderBy('sort_order')->get(),
+            'products' => Product::query()->orderBy('sort_order')->paginate(15),
         ]);
     }
 
@@ -27,10 +28,8 @@ class ProductController extends Controller
     {
         $validated = $this->validateProduct($request);
 
-        foreach (['image'] as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('products', 'public');
-            }
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
         if (blank($validated['slug'] ?? null)) {
@@ -51,12 +50,14 @@ class ProductController extends Controller
     {
         $validated = $this->validateProduct($request, $product);
 
-        foreach (['image'] as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('products', 'public');
-            } else {
-                unset($validated[$field]);
-            }
+        if ($request->hasFile('image')) {
+            $this->deleteStoredImage($product->image);
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        } elseif ($request->boolean('remove_image')) {
+            $this->deleteStoredImage($product->image);
+            $validated['image'] = null;
+        } else {
+            unset($validated['image']);
         }
 
         $product->update($validated);
@@ -66,9 +67,17 @@ class ProductController extends Controller
 
     public function destroy(Product $product): RedirectResponse
     {
+        $this->deleteStoredImage($product->image);
         $product->delete();
 
         return redirect()->route('admin.products.index')->with('success', 'Product deleted.');
+    }
+
+    private function deleteStoredImage(?string $path): void
+    {
+        if (filled($path) && ! str_starts_with($path, 'http')) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function validateProduct(Request $request, ?Product $product = null): array

@@ -14595,6 +14595,7 @@ strong {
   font-size: 18px;
   color: var(--bs-heading-color);
   font-weight: 600;
+  width: 100%;
 }
 @media (max-width: 1199.98px) {
   .app-menubar-tabs {

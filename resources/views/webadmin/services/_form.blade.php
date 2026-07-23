@@ -37,6 +37,14 @@
 	<div class="col-md-6">
 		<label class="form-label">Card Image</label>
 		<input type="file" name="image" class="form-control" accept="image/*">
-		@if($service?->imageUrl())<img src="{{ $service->imageUrl() }}" height="60" class="mt-2 rounded">@endif
+		@if($service?->image)
+			<div class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+				<img src="{{ $service->imageUrl() }}" height="60" class="rounded">
+				<div class="form-check mb-0">
+					<input type="checkbox" name="remove_image" value="1" class="form-check-input" id="remove_image">
+					<label class="form-check-label text-danger" for="remove_image">Remove</label>
+				</div>
+			</div>
+		@endif
 	</div>
 </div>

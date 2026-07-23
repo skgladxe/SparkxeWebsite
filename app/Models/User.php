@@ -12,6 +12,13 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public const ROLES = [
+        'Admin',
+        'Manager',
+        'Editor',
+        'Staff',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +28,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'avatar',
     ];
 
     /**
@@ -44,5 +53,28 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function roleLabel(): string
+    {
+        return filled($this->role) ? $this->role : 'Admin';
+    }
+
+    public function avatarUrl(): string
+    {
+        if (filled($this->avatar)) {
+            if (str_starts_with($this->avatar, 'http://') || str_starts_with($this->avatar, 'https://')) {
+                return $this->avatar;
+            }
+
+            return asset('storage/'.$this->avatar);
+        }
+
+        return asset('webadmin/assets/images/avatar/avatar1.webp');
+    }
+
+    public function hasCustomAvatar(): bool
+    {
+        return filled($this->avatar);
     }
 }

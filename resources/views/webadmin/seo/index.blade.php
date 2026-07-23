@@ -19,7 +19,7 @@
 				<table class="table table-hover align-middle mb-0">
 					<thead>
 						<tr>
-							<th>#</th>
+							<th>S.No</th>
 							<th>Page</th>
 							<th>URL Slug</th>
 							<th>Route Key</th>
@@ -32,7 +32,7 @@
 					<tbody>
 						@forelse ($seoPages as $seoPage)
 							<tr>
-								<td>{{ $loop->iteration }}</td>
+								<td>{{ $seoPages->firstItem() + $loop->index }}</td>
 								<td>{{ $seoPage->page_label }}</td>
 								<td><code>{{ $seoPage->url_slug }}</code></td>
 								<td><code>{{ $seoPage->route_key }}</code></td>
@@ -40,7 +40,9 @@
 								<td><span class="badge bg-primary-subtle text-primary">{{ $seoPage->schema_type }}</span></td>
 								<td>{{ $seoPage->updated_at?->format('d M Y') }}</td>
 								<td class="text-end">
-									<a href="{{ route('admin.seo.edit', $seoPage) }}" class="btn btn-sm btn-outline-primary">Edit SEO</a>
+									<div class="table-actions">
+										<a href="{{ route('admin.seo.edit', $seoPage) }}" class="btn btn-sm btn-outline-primary">Edit SEO</a>
+									</div>
 								</td>
 							</tr>
 						@empty
@@ -54,6 +56,7 @@
 					</tbody>
 				</table>
 			</div>
+			@include('webadmin.partials.table-pagination', ['paginator' => $seoPages])
 		</div>
 	</div>
 </div>

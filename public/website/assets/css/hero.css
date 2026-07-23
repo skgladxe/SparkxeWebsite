@@ -96,7 +96,7 @@
 	position: relative;
 	z-index: 1;
 	margin-left: auto;
-	max-width: 540px;
+	/* max-width: 540px; */
 }
 
 .hero-img {
@@ -107,7 +107,7 @@
 
 .hero-img img {
 	width: 100%;
-	aspect-ratio: 1 / 1.2082;
+	/* aspect-ratio: 1 / 1.2082; */
 	object-fit: cover;
 	border-radius: 12px;
 }

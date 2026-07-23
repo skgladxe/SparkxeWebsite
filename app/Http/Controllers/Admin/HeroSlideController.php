@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\HeroSlide;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class HeroSlideController extends Controller
@@ -15,7 +16,7 @@ class HeroSlideController extends Controller
     public function index(): View
     {
         return view('webadmin.hero-slides.index', [
-            'slides' => HeroSlide::query()->orderBy('sort_order')->get(),
+            'slides' => HeroSlide::query()->orderBy('sort_order')->paginate(15),
             'canAdd' => HeroSlide::query()->count() < self::MAX_SLIDES,
             'maxSlides' => self::MAX_SLIDES,
         ]);
@@ -62,7 +63,11 @@ class HeroSlideController extends Controller
 
         foreach (['main_image', 'left_image', 'right_image'] as $field) {
             if ($request->hasFile($field)) {
+                $this->deleteStoredImage($heroSlide->$field);
                 $validated[$field] = $request->file($field)->store('hero', 'public');
+            } elseif ($request->boolean('remove_'.$field)) {
+                $this->deleteStoredImage($heroSlide->$field);
+                $validated[$field] = null;
             } else {
                 unset($validated[$field]);
             }
@@ -75,9 +80,20 @@ class HeroSlideController extends Controller
 
     public function destroy(HeroSlide $heroSlide): RedirectResponse
     {
+        foreach (['main_image', 'left_image', 'right_image'] as $field) {
+            $this->deleteStoredImage($heroSlide->$field);
+        }
+
         $heroSlide->delete();
 
         return redirect()->route('admin.hero-slides.index')->with('success', 'Hero slide deleted.');
+    }
+
+    private function deleteStoredImage(?string $path): void
+    {
+        if (filled($path) && ! str_starts_with($path, 'http')) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function validateSlide(Request $request, ?HeroSlide $slide = null): array
@@ -91,7 +107,7 @@ class HeroSlideController extends Controller
             'primary_button_url' => ['required', 'string', 'max:500'],
             'secondary_button_text' => ['nullable', 'string', 'max:100'],
             'secondary_button_url' => ['nullable', 'string', 'max:500'],
-            'main_image' => [$slide ? 'nullable' : 'nullable', 'image', 'max:5120'],
+            'main_image' => ['nullable', 'image', 'max:5120'],
             'left_image' => ['nullable', 'image', 'max:5120'],
             'right_image' => ['nullable', 'image', 'max:5120'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
@@ -99,7 +115,7 @@ class HeroSlideController extends Controller
         ];
 
         return $request->validate($rules) + [
-            'is_active' => $request->boolean('is_active', true),
+            'is_active' => $request->boolean('is_active'),
             'sort_order' => (int) ($request->input('sort_order', 0)),
         ];
     }

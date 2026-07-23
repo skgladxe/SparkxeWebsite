@@ -15,7 +15,7 @@ class SeoController extends Controller
 {
     public function index(): View
     {
-        $seoPages = SeoMeta::query()->orderBy('page_label')->get();
+        $seoPages = SeoMeta::query()->orderBy('page_label')->paginate(15);
 
         return view('webadmin.seo.index', compact('seoPages'));
     }

@@ -1,6 +1,6 @@
 @extends('webadmin.layouts.auth')
 
-@section('title', 'Login — '.config('webadmin.name'))
+@section('title', 'Login — '.($adminLogoText ?? \App\Models\SiteSetting::adminLogoText()))
 
 @section('content')
 <div class="auth-cover-wrapper">
@@ -10,9 +10,15 @@
 				<div class="w-100" style="max-width: 420px;">
 					<div class="text-center mb-4">
 						<a href="{{ route('website.home') }}" class="d-inline-block mb-3">
-							<img src="{{ \App\Models\SiteSetting::logoUrl() }}" alt="{{ config('website.name') }}" height="42">
+							<img src="{{ $adminLogoUrl ?? \App\Models\SiteSetting::adminLogoUrl() }}" alt="{{ $adminLogoText ?? \App\Models\SiteSetting::adminLogoText() }}" height="42">
 						</a>
-						<h4 class="mb-1">Welcome to {{ config('webadmin.name') }}</h4>
+						@if($adminLogoTextImageUrl ?? \App\Models\SiteSetting::adminLogoTextImageUrl())
+							<div class="mb-2">
+								<img src="{{ $adminLogoTextImageUrl ?? \App\Models\SiteSetting::adminLogoTextImageUrl() }}" alt="{{ $adminLogoText ?? \App\Models\SiteSetting::adminLogoText() }}" height="32">
+							</div>
+						@else
+							<h4 class="mb-1">Welcome to {{ $adminLogoText ?? \App\Models\SiteSetting::adminLogoText() }}</h4>
+						@endif
 						<p class="text-muted mb-0">Sign in to manage your Sparkxe website.</p>
 					</div>
 

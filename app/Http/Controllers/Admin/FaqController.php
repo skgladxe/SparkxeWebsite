@@ -13,7 +13,7 @@ class FaqController extends Controller
     public function index(): View
     {
         return view('webadmin.faqs.index', [
-            'faqs' => Faq::query()->orderBy('sort_order')->get(),
+            'faqs' => Faq::query()->orderBy('sort_order')->paginate(15),
         ]);
     }
 

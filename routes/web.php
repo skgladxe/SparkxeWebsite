@@ -21,7 +21,7 @@ require __DIR__.'/admin.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('new-website')->name('website.')->group(function () {
+Route::name('website.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
     Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');

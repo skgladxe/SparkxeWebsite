@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -16,7 +17,7 @@ class BlogController extends Controller
     public function index(): View
     {
         return view('webadmin.blogs.index', [
-            'blogs' => Blog::query()->with('category')->latest()->get(),
+            'blogs' => Blog::query()->with('category')->latest()->paginate(15),
         ]);
     }
 
@@ -55,7 +56,11 @@ class BlogController extends Controller
         $validated['slug'] = $this->uniqueSlug($validated['slug'] ?? $validated['title'], $blog->id);
 
         if ($request->hasFile('featured_image')) {
+            $this->deleteStoredImage($blog->featured_image);
             $validated['featured_image'] = $request->file('featured_image')->store('blogs', 'public');
+        } elseif ($request->boolean('remove_featured_image')) {
+            $this->deleteStoredImage($blog->featured_image);
+            $validated['featured_image'] = null;
         } else {
             unset($validated['featured_image']);
         }
@@ -67,9 +72,17 @@ class BlogController extends Controller
 
     public function destroy(Blog $blog): RedirectResponse
     {
+        $this->deleteStoredImage($blog->featured_image);
         $blog->delete();
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog post deleted.');
+    }
+
+    private function deleteStoredImage(?string $path): void
+    {
+        if (filled($path) && ! str_starts_with($path, 'http')) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function validateBlog(Request $request, ?int $ignoreId = null): array

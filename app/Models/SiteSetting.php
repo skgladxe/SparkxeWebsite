@@ -22,19 +22,63 @@ class SiteSetting extends Model
         Cache::forget('site_setting_'.$key);
     }
 
-    public static function logoUrl(): string
+    public static function assetUrl(?string $path): ?string
     {
-        $path = static::get('logo');
-
-        if (filled($path)) {
-            if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
-                return $path;
-            }
-
-            return asset('storage/'.$path);
+        if (blank($path)) {
+            return null;
         }
 
-        return asset('website/assets/images/logo.svg');
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return asset('storage/'.$path);
+    }
+
+    public static function logoUrl(): string
+    {
+        return static::websiteNavLogoUrl();
+    }
+
+    public static function websiteNavLogoUrl(): string
+    {
+        return static::assetUrl(static::get('website_nav_logo'))
+            ?? static::assetUrl(static::get('logo'))
+            ?? asset('website/assets/images/logo.svg');
+    }
+
+    public static function websiteFooterLogoUrl(): string
+    {
+        return static::assetUrl(static::get('website_footer_logo'))
+            ?? static::websiteNavLogoUrl();
+    }
+
+    public static function websiteFaviconUrl(): string
+    {
+        return static::assetUrl(static::get('website_favicon'))
+            ?? asset('website/assets/images/logo.svg');
+    }
+
+    public static function adminLogoUrl(): string
+    {
+        return static::assetUrl(static::get('admin_logo'))
+            ?? asset(config('webadmin.images.logo'));
+    }
+
+    public static function adminFaviconUrl(): string
+    {
+        return static::assetUrl(static::get('admin_favicon'))
+            ?? asset(config('webadmin.images.favicon'));
+    }
+
+    public static function adminLogoText(): string
+    {
+        return static::get('admin_logo_text') ?? config('webadmin.name');
+    }
+
+    public static function adminLogoTextImageUrl(): ?string
+    {
+        return static::assetUrl(static::get('admin_logo_text_image'));
     }
 
     public static function websiteSettings(): array

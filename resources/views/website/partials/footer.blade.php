@@ -4,6 +4,9 @@
 			<div class="footer-panel wow fadeInUp">
 				<div class="footer-top">
 					<div class="footer-brand">
+						<a href="{{ route('website.home') }}" class="footer-logo d-inline-block mb-3">
+							<img src="{{ $siteFooterLogoUrl ?? \App\Models\SiteSetting::websiteFooterLogoUrl() }}" alt="{{ config('website.name') }}" height="48">
+						</a>
 						<h2>Smart Software for Seamless Business Growth</h2>
 						<div class="footer-brand-line"></div>
 						<div class="footer-social">

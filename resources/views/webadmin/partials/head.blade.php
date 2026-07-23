@@ -4,8 +4,8 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="{{ config('webadmin.description') }}">
 
-<link rel="icon" type="image/png" href="{{ asset(config('webadmin.images.favicon')) }}">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset(config('webadmin.images.apple_touch_icon')) }}">
+<link rel="icon" href="{{ $adminFaviconUrl ?? \App\Models\SiteSetting::adminFaviconUrl() }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ $adminFaviconUrl ?? \App\Models\SiteSetting::adminFaviconUrl() }}">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -39,17 +39,41 @@
 	<div class="col-md-4">
 		<label class="form-label">Main Image</label>
 		<input type="file" name="main_image" class="form-control" accept="image/*">
-		@if($slide?->mainImageUrl())<img src="{{ $slide->mainImageUrl() }}" height="60" class="mt-2 rounded">@endif
+		@if($slide?->main_image)
+			<div class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+				<img src="{{ $slide->mainImageUrl() }}" height="60" class="rounded">
+				<div class="form-check mb-0">
+					<input type="checkbox" name="remove_main_image" value="1" class="form-check-input" id="remove_main_image">
+					<label class="form-check-label text-danger" for="remove_main_image">Remove</label>
+				</div>
+			</div>
+		@endif
 	</div>
 	<div class="col-md-4">
 		<label class="form-label">Left Image</label>
 		<input type="file" name="left_image" class="form-control" accept="image/*">
-		@if($slide?->leftImageUrl())<img src="{{ $slide->leftImageUrl() }}" height="60" class="mt-2 rounded">@endif
+		@if($slide?->left_image)
+			<div class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+				<img src="{{ $slide->leftImageUrl() }}" height="60" class="rounded">
+				<div class="form-check mb-0">
+					<input type="checkbox" name="remove_left_image" value="1" class="form-check-input" id="remove_left_image">
+					<label class="form-check-label text-danger" for="remove_left_image">Remove</label>
+				</div>
+			</div>
+		@endif
 	</div>
 	<div class="col-md-4">
 		<label class="form-label">Right Image</label>
 		<input type="file" name="right_image" class="form-control" accept="image/*">
-		@if($slide?->rightImageUrl())<img src="{{ $slide->rightImageUrl() }}" height="60" class="mt-2 rounded">@endif
+		@if($slide?->right_image)
+			<div class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+				<img src="{{ $slide->rightImageUrl() }}" height="60" class="rounded">
+				<div class="form-check mb-0">
+					<input type="checkbox" name="remove_right_image" value="1" class="form-check-input" id="remove_right_image">
+					<label class="form-check-label text-danger" for="remove_right_image">Remove</label>
+				</div>
+			</div>
+		@endif
 	</div>
 	<div class="col-12">
 		<div class="form-check">

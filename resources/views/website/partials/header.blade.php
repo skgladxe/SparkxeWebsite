@@ -6,7 +6,7 @@
 					<div class="container">
 						<div class="mobile-nav-row d-lg-none">
 							<a class="navbar-brand" href="{{ route('website.home') }}">
-								<img src="{{ $siteLogoUrl ?? \App\Models\SiteSetting::logoUrl() }}" alt="{{ config('website.name') }}">
+								<img src="{{ $siteLogoUrl ?? \App\Models\SiteSetting::websiteNavLogoUrl() }}" alt="{{ config('website.name') }}">
 							</a>
 							<button class="mobile-menu-btn" type="button" aria-label="Open menu">
 								<span></span><span></span><span></span>
@@ -40,7 +40,7 @@
 						</div>
 
 						<a class="navbar-brand d-none d-lg-block" href="{{ route('website.home') }}">
-							<img src="{{ $siteLogoUrl ?? \App\Models\SiteSetting::logoUrl() }}" alt="{{ config('website.name') }}">
+							<img src="{{ $siteLogoUrl ?? \App\Models\SiteSetting::websiteNavLogoUrl() }}" alt="{{ config('website.name') }}">
 						</a>
 
 						<div class="collapse navbar-collapse main-menu">

@@ -79,7 +79,7 @@ header.main-header .header-sticky.is-scrolled .navbar {
 }
 
 .navbar-brand img {
-	height: 34px;
+	height: 80px;
 	width: auto;
 }
 
@@ -596,7 +596,7 @@ body.menu-open {
 
 @media only screen and (max-width: 767px) {
 	.navbar-brand img {
-		height: 28px;
+		height: 60px;
 	}
 }
 

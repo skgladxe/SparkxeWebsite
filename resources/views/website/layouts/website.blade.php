@@ -60,6 +60,7 @@
 
 	@include('website.partials.theme-picker')
 	@include('website.partials.whatsapp-float')
+	@include('website.partials.cookie-consent')
 
 	<script src="{{ asset('website/assets/js/main.js') }}"></script>
 	@stack('scripts')

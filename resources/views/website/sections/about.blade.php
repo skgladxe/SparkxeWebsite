@@ -20,7 +20,7 @@
 					<div class="about-highlights wow fadeInUp" data-wow-delay="0.4s">
 						<div class="about-highlight-item">
 							<i class="fa-solid fa-rocket"></i>
-							<div><strong>150+ Projects</strong><span>Delivered on time</span></div>
+							<div><strong>15+ Projects</strong><span>Delivered on time</span></div>
 						</div>
 						<div class="about-highlight-item">
 							<i class="fa-solid fa-users"></i>

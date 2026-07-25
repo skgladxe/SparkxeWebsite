@@ -36,4 +36,14 @@ class PageController extends Controller
     {
         return view('website.pages.portfolio');
     }
+
+    public function privacyPolicy(): View
+    {
+        return view('website.pages.privacy');
+    }
+
+    public function cookiePolicy(): View
+    {
+        return view('website.pages.cookies');
+    }
 }

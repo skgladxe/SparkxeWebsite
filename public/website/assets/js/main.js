@@ -224,4 +224,53 @@
 			live: true
 		}).init();
 	}
+
+	/* Cookie consent */
+	var COOKIE_CONSENT_KEY = "sparkxe-cookie-consent";
+	var $cookieBanner = $("#cookieConsent");
+
+	function setCookieConsent(value) {
+		try {
+			localStorage.setItem(COOKIE_CONSENT_KEY, value);
+		} catch (e) {}
+		$cookieBanner.attr("hidden", true);
+		document.dispatchEvent(new CustomEvent("sparkxe:cookie-consent", { detail: { value: value } }));
+	}
+
+	function getCookieConsent() {
+		try {
+			return localStorage.getItem(COOKIE_CONSENT_KEY);
+		} catch (e) {
+			return null;
+		}
+	}
+
+	function updateCookiePrefStatus() {
+		var $status = $("#cookiePrefStatus");
+		if (!$status.length) return;
+		var value = getCookieConsent();
+		if (!value) {
+			$status.prop("hidden", true);
+			return;
+		}
+		$status
+			.text(value === "accepted" ? "Current preference: cookies accepted." : "Current preference: cookies rejected.")
+			.prop("hidden", false);
+	}
+
+	if ($cookieBanner.length && !getCookieConsent()) {
+		$cookieBanner.prop("hidden", false);
+	}
+
+	$(document).on("click", "[data-cookie-consent]", function () {
+		var action = $(this).attr("data-cookie-consent");
+		if (action === "accept") {
+			setCookieConsent("accepted");
+		} else if (action === "reject") {
+			setCookieConsent("rejected");
+		}
+		updateCookiePrefStatus();
+	});
+
+	updateCookiePrefStatus();
 })(jQuery);

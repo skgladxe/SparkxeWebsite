@@ -542,6 +542,223 @@
 	padding-top: 28px;
 	font-size: 13px;
 	opacity: 0.55;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 12px 24px;
+}
+
+.footer-bottom p {
+	margin: 0;
+}
+
+.footer-legal {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 8px 20px;
+}
+
+.footer-legal a {
+	opacity: 1;
+	transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.footer-legal a:hover {
+	opacity: 1;
+	color: var(--accent-secondary-color);
+}
+
+/************************************/
+/* Legal pages                      */
+/************************************/
+
+.spark-legal {
+	padding: 70px 0 100px;
+	position: relative;
+	z-index: 1;
+}
+
+.legal-panel {
+	border: 1px solid var(--divider-color);
+	border-radius: 28px;
+	padding: 48px 44px;
+	background: linear-gradient(160deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+.legal-updated {
+	font-size: 13px;
+	opacity: 0.55;
+	margin-bottom: 28px;
+}
+
+.legal-block {
+	margin-bottom: 32px;
+}
+
+.legal-block:last-child {
+	margin-bottom: 0;
+}
+
+.legal-block h2 {
+	font-size: 22px;
+	font-weight: 700;
+	margin-bottom: 12px;
+}
+
+.legal-block p,
+.legal-block li {
+	font-size: 15px;
+	line-height: 1.75;
+	opacity: 0.85;
+}
+
+.legal-block p {
+	margin-bottom: 12px;
+}
+
+.legal-block ul {
+	margin: 0 0 12px;
+	padding-left: 20px;
+}
+
+.legal-block li {
+	margin-bottom: 8px;
+}
+
+.legal-block a {
+	color: var(--accent-secondary-color);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.legal-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 20px 0 8px;
+}
+
+.legal-pref-status {
+	font-size: 14px;
+	margin-top: 8px;
+	color: var(--accent-secondary-color);
+	opacity: 1;
+}
+
+.btn-outline-soft {
+	display: inline-block;
+	padding: 14px 26px;
+	border-radius: 30px;
+	border: 1px solid var(--divider-color);
+	background: transparent;
+	color: var(--primary-color);
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1em;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.btn-outline-soft:hover {
+	border-color: var(--accent-secondary-color);
+	color: var(--accent-secondary-color);
+}
+
+/************************************/
+/* Cookie consent                   */
+/************************************/
+
+.cookie-consent {
+	position: fixed;
+	left: 20px;
+	right: 20px;
+	bottom: 20px;
+	z-index: 1080;
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+.cookie-consent[hidden] {
+	display: none !important;
+}
+
+.cookie-consent-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 22px 24px;
+	border-radius: 20px;
+	border: 1px solid var(--divider-color);
+	background: var(--nav-shell-bg);
+	backdrop-filter: blur(16px);
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+.cookie-consent-copy h3 {
+	font-size: 16px;
+	font-weight: 700;
+	margin: 0 0 6px;
+}
+
+.cookie-consent-copy p {
+	font-size: 13px;
+	line-height: 1.55;
+	opacity: 0.8;
+	margin: 0;
+}
+
+.cookie-consent-copy a {
+	color: var(--accent-secondary-color);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.cookie-consent-actions {
+	display: flex;
+	flex-shrink: 0;
+	gap: 10px;
+}
+
+.cookie-consent-actions .btn-default,
+.cookie-consent-actions .btn-outline-soft {
+	padding: 12px 22px;
+	font-size: 14px;
+}
+
+@media only screen and (max-width: 767px) {
+	.cookie-consent {
+		left: 12px;
+		right: 12px;
+		bottom: 12px;
+	}
+
+	.cookie-consent-inner {
+		flex-direction: column;
+		align-items: stretch;
+		padding: 18px;
+	}
+
+	.cookie-consent-actions {
+		width: 100%;
+	}
+
+	.cookie-consent-actions .btn-default,
+	.cookie-consent-actions .btn-outline-soft {
+		flex: 1;
+		text-align: center;
+	}
+
+	.legal-panel {
+		padding: 32px 22px;
+		border-radius: 20px;
+	}
 }
 
 /************************************/
@@ -549,7 +766,7 @@
 /************************************/
 
 .spark-about {
-	padding: 90px 0;
+	padding: 90px 0 0 0;
 	position: relative;
 	z-index: 1;
 }
@@ -641,7 +858,7 @@
 /************************************/
 
 .spark-process {
-	padding: 90px 0;
+	padding: 90px 0 0 0;
 	position: relative;
 	z-index: 1;
 }
@@ -782,7 +999,7 @@
 /************************************/
 
 .spark-cta-banner {
-	padding: 24px 0 90px;
+	padding: 90px 0 0 0;
 	position: relative;
 	z-index: 1;
 }
@@ -1258,6 +1475,7 @@
 
 .team-showcase-photo {
 	position: relative;
+	max-height: 500px;
 	border-radius: 28px;
 	overflow: hidden;
 	border: 1px solid var(--divider-color);

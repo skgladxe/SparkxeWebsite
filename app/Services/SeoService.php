@@ -47,6 +47,8 @@ class SeoService
             'website.pricing' => 'pricing',
             'website.faq' => 'faq',
             'website.portfolio' => 'portfolio',
+            'website.privacy' => 'privacy',
+            'website.cookies' => 'cookies',
             'website.blog' => 'blog',
             'website.blog.show' => 'blog:'.$request->route('slug'),
             'website.services.index' => 'services',
@@ -190,6 +192,8 @@ class SeoService
             'pricing' => 'Pricing (/new-website/pricing)',
             'faq' => 'FAQ (/new-website/faq)',
             'portfolio' => 'Portfolio (/new-website/portfolio)',
+            'privacy' => 'Privacy Policy (/new-website/privacy-policy)',
+            'cookies' => 'Cookie Policy (/new-website/cookie-policy)',
             'blog' => 'Blog (/new-website/blog)',
             'services' => 'All Services (/new-website/services)',
         ];

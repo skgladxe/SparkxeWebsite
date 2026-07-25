@@ -34,6 +34,8 @@ Route::name('website.')->group(function () {
     Route::get('/pricing', [PageController::class, 'pricing'])->name('pricing');
     Route::get('/faq', [PageController::class, 'faq'])->name('faq');
     Route::get('/portfolio', [PageController::class, 'portfolio'])->name('portfolio');
+    Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy');
+    Route::get('/cookie-policy', [PageController::class, 'cookiePolicy'])->name('cookies');
     Route::get('/blog', [BlogController::class, 'index'])->name('blog');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 });

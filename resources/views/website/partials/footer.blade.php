@@ -40,11 +40,17 @@
 							<li><a href="{{ route('website.team') }}">Our Team</a></li>
 							<li><a href="{{ route('website.services.index') }}">Our Services</a></li>
 							<li><a href="{{ route('website.contact') }}">Get a Quote</a></li>
+							<li><a href="{{ route('website.privacy') }}">Privacy Policy</a></li>
+							<li><a href="{{ route('website.cookies') }}">Cookie Policy</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="footer-bottom">
 					<p>Copyright &copy; {{ date('Y') }} Sparkxe. All rights reserved.</p>
+					<ul class="footer-legal">
+						<li><a href="{{ route('website.privacy') }}">Privacy Policy</a></li>
+						<li><a href="{{ route('website.cookies') }}">Cookie Policy</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>

@@ -15,6 +15,6 @@
 		],
 	])
 
-	@include('website.sections.contact', ['selectedService' => request('service')])
+	@include('website.sections.contact', ['selectedService' => request('service'), 'showMap' => true])
 	@include('website.sections.trust')
 @endsection

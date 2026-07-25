@@ -9,12 +9,6 @@
 						</a>
 						<h2>Smart Software for Seamless Business Growth</h2>
 						<div class="footer-brand-line"></div>
-						<div class="footer-social">
-							<a href="{{ config('website.social.facebook') }}" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-							<a href="{{ config('website.social.twitter') }}" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-							<a href="{{ config('website.social.instagram') }}" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-							<a href="{{ config('website.social.linkedin') }}" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-						</div>
 					</div>
 					<div class="footer-col">
 						<h4>Solutions</h4>
@@ -25,32 +19,41 @@
 						</ul>
 					</div>
 					<div class="footer-col">
-						<h4>Support</h4>
-						<ul>
-							<li><a href="{{ route('website.faq') }}">Help Center</a></li>
-							<li><a href="{{ route('website.contact') }}">Contact Support</a></li>
-							<li><a href="{{ route('website.pricing') }}">Pricing</a></li>
-							<li><a href="{{ route('website.blog') }}">Blog</a></li>
-						</ul>
-					</div>
-					<div class="footer-col">
 						<h4>Company</h4>
 						<ul>
 							<li><a href="{{ route('website.about') }}">About Sparkxe</a></li>
 							<li><a href="{{ route('website.team') }}">Our Team</a></li>
 							<li><a href="{{ route('website.services.index') }}">Our Services</a></li>
 							<li><a href="{{ route('website.contact') }}">Get a Quote</a></li>
+							<li><a href="{{ route('website.pricing') }}">Pricing</a></li>
 							<li><a href="{{ route('website.privacy') }}">Privacy Policy</a></li>
 							<li><a href="{{ route('website.cookies') }}">Cookie Policy</a></li>
 						</ul>
 					</div>
+					<div class="footer-col footer-col-contact">
+						<h4>Contact</h4>
+						<div class="footer-contact-mini">
+							<p>
+								<a href="{{ config('website.social.map') }}" target="_blank" rel="noopener noreferrer">
+									@foreach (config('website.address_lines') as $line)
+										{{ $line }}@if (!$loop->last)<br>@endif
+									@endforeach
+								</a>
+							</p>
+							<p><a href="tel:{{ config('website.phone_link') }}">{{ config('website.phone') }}</a></p>
+							<p><a href="mailto:{{ config('website.email') }}">{{ config('website.email') }}</a></p>
+						</div>
+						<div class="footer-social">
+							<a href="{{ config('website.social.instagram') }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+							<a href="{{ config('website.social.facebook') }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+							<a href="{{ config('website.social.whatsapp') }}?text={{ urlencode(config('website.whatsapp_message')) }}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+							<a href="{{ config('website.social.map') }}" target="_blank" rel="noopener noreferrer" aria-label="Location map"><i class="fa-solid fa-location-dot"></i></a>
+							<a href="{{ config('website.social.phone') }}" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+						</div>
+					</div>
 				</div>
 				<div class="footer-bottom">
 					<p>Copyright &copy; {{ date('Y') }} Sparkxe. All rights reserved.</p>
-					<ul class="footer-legal">
-						<li><a href="{{ route('website.privacy') }}">Privacy Policy</a></li>
-						<li><a href="{{ route('website.cookies') }}">Cookie Policy</a></li>
-					</ul>
 				</div>
 			</div>
 		</div>

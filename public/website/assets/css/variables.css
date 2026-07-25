@@ -170,3 +170,29 @@
 	--gradient-accent: linear-gradient(254.54deg, var(--accent-color) 0.03%, var(--accent-secondary-color) 100%);
 	--gradient-accent-reverse: linear-gradient(254.54deg, var(--accent-secondary-color) 0.03%, var(--accent-color) 100%);
 }
+
+/* Shared section rhythm (all themes) */
+:root {
+	--section-space: 90px;
+	--section-space-tight: 56px;
+	--section-header-gap: 48px;
+	--section-title-gap: 36px;
+}
+
+@media only screen and (max-width: 991px) {
+	:root {
+		--section-space: 70px;
+		--section-space-tight: 44px;
+		--section-header-gap: 36px;
+		--section-title-gap: 28px;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	:root {
+		--section-space: 52px;
+		--section-space-tight: 36px;
+		--section-header-gap: 28px;
+		--section-title-gap: 24px;
+	}
+}

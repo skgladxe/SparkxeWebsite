@@ -83,6 +83,10 @@
 					<ul>
 						<li>Email: <a href="mailto:{{ config('website.email') }}">{{ config('website.email') }}</a></li>
 						<li>Phone: <a href="tel:{{ config('website.phone_link') }}">{{ config('website.phone') }}</a></li>
+						<li>
+							Address:
+							{{ implode(' ', config('website.address_lines')) }}
+						</li>
 						<li>Or visit our <a href="{{ route('website.contact') }}">Contact</a> page</li>
 					</ul>
 				</div>

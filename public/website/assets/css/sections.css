@@ -3,7 +3,11 @@
 /************************************/
 
 .section-row {
-	margin-bottom: 60px;
+	margin-bottom: var(--section-header-gap);
+}
+
+.section-row .section-title {
+	margin-bottom: 0;
 }
 
 .section-content-btn {
@@ -103,7 +107,7 @@
 
 .our-specialization {
 	position: relative;
-	padding: 100px 0 90px;
+	padding: var(--section-space) 0;
 	z-index: 1;
 }
 
@@ -236,7 +240,7 @@
 .specialization-slider .swiper-pagination {
 	position: relative;
 	text-align: center;
-	margin-top: 50px;
+	margin-top: var(--section-header-gap);
 }
 
 .specialization-slider .swiper-pagination-bullet {
@@ -285,7 +289,7 @@
 
 .our-facts {
 	position: relative;
-	padding: 90px 0;
+	padding: var(--section-space) 0;
 	z-index: 1;
 }
 
@@ -328,7 +332,7 @@
 }
 
 .our-facts-content .section-title {
-	margin-bottom: 50px;
+	margin-bottom: var(--section-header-gap);
 }
 
 .facts-counter-box {
@@ -360,7 +364,7 @@
 
 .facts-list-item {
 	padding-left: 40px;
-	margin-bottom: 50px;
+	margin-bottom: var(--section-header-gap);
 	position: relative;
 }
 
@@ -401,7 +405,7 @@
 
 .our-tools {
 	position: relative;
-	padding: 90px 0 60px;
+	padding: var(--section-space) 0;
 	z-index: 1;
 }
 
@@ -472,16 +476,8 @@
 }
 
 @media only screen and (max-width: 991px) {
-	.section-row {
-		margin-bottom: 40px;
-	}
-
 	.section-title h2 {
 		font-size: 32px;
-	}
-
-	.our-specialization {
-		padding: 70px 0 60px;
 	}
 
 	.service-item {
@@ -490,7 +486,7 @@
 	}
 
 	.service-item-header {
-		margin-bottom: 40px;
+		margin-bottom: 28px;
 	}
 
 	.our-facts-box {
@@ -508,7 +504,7 @@
 	}
 
 	.our-facts-content .section-title {
-		margin-bottom: 30px;
+		margin-bottom: var(--section-header-gap);
 	}
 
 	.scrolling-content span {
@@ -518,7 +514,7 @@
 
 /* Contact CTA */
 .contact-cta {
-	padding: 60px 0 80px;
+	padding: var(--section-space) 0;
 	text-align: center;
 }
 
@@ -545,6 +541,15 @@
 		font-size: 36px;
 	}
 
+	.facts-list-item {
+		padding-left: 32px;
+		margin-bottom: 24px;
+	}
+
+	.service-item-header {
+		margin-bottom: 24px;
+	}
+
 	.our-facts-box {
 		padding: 28px 20px;
 		margin: 0 4px;
@@ -556,6 +561,11 @@
 		top: 12px;
 		width: calc(100% - 24px);
 		border-radius: 14px;
+	}
+
+	.tool-item {
+		height: auto;
+		margin-bottom: 16px;
 	}
 
 	.tool-item-counter h2 {
@@ -570,5 +580,13 @@
 		width: 22px;
 		height: 22px;
 		margin-right: 12px;
+	}
+
+	.specialization-slider .swiper-pagination {
+		margin-top: 28px;
+	}
+
+	.section-footer-text {
+		margin-top: 24px;
 	}
 }

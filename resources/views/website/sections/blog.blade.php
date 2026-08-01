@@ -6,6 +6,7 @@
 					<div class="section-title">
 						<h3 class="wow fadeInUp">Latest Insights</h3>
 						<h2 class="wow fadeInUp" data-wow-delay="0.2s">Tips and trends from the <span>Sparkxe team</span></h2>
+						<p class="wow fadeInUp" data-wow-delay="0.3s" style="margin-top: 16px; opacity: 0.85; line-height: 1.6;">Practical advice on digital marketing, custom software, and design — written for modern businesses ready to grow online.</p>
 					</div>
 				</div>
 				<div class="col-lg-5 text-lg-end">

@@ -110,15 +110,15 @@
 		});
 	}
 
-	/* Counters — trigger when visible */
+	/* Counters — trigger once when visible; always end on data-count */
 	function initCounter($c) {
 		if ($c.data("counted")) return;
 		$c.data("counted", true);
-		var target = parseInt($c.data("count"), 10);
+		var target = parseInt($c.attr("data-count"), 10);
 		if (isNaN(target)) {
 			target = parseInt($c.text(), 10) || 0;
 		}
-		$c.text(target);
+		$c.attr("data-count", target).text(target);
 		$c.counterUp({ delay: 8, time: 1800 });
 	}
 
@@ -132,6 +132,7 @@
 		var $section = $(this);
 		$section.waypoint(function () {
 			initCounters($section);
+			this.destroy();
 		}, { offset: "80%" });
 	});
 
@@ -139,6 +140,7 @@
 		var $counterWrap = $(this);
 		$counterWrap.waypoint(function () {
 			initCounters($counterWrap);
+			this.destroy();
 		}, { offset: "90%" });
 	});
 

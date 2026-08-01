@@ -128,7 +128,8 @@ class SeoService
             $seo->setAttribute('twitter_description', $seo->og_description);
         }
 
-        $seo->setAttribute('og_type', config('website.seo.og_type', 'website'));
+        $isArticle = str_starts_with((string) $routeKey, 'blog:') || $seo->schema_type === 'Article';
+        $seo->setAttribute('og_type', $isArticle ? 'article' : config('website.seo.og_type', 'website'));
         $seo->setAttribute('twitter_card', config('website.seo.twitter_card', 'summary_large_image'));
         $seo->setAttribute('og_site_name', $company);
         $seo->setAttribute('canonical_url_resolved', $this->getCanonicalUrl($seo, $request));
@@ -136,7 +137,7 @@ class SeoService
         $seo->setAttribute('og_url_resolved', $seo->getAttribute('canonical_url_resolved'));
 
         if (blank($seo->schema_json) && $seo->schema_type !== 'none') {
-            $seo->schema_json = $this->buildSchemaJson($seo);
+            $seo->schema_json = $this->buildSchemaJson($seo, force: true);
         }
 
         return $seo;
@@ -303,6 +304,32 @@ class SeoService
         $logo = $this->resolveOgImage($seo);
 
         return match ($seo->schema_type) {
+            'Article' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'Article',
+                'headline' => $seo->meta_title ?? $seo->page_label,
+                'name' => $seo->meta_title ?? $seo->page_label,
+                'description' => $seo->meta_description,
+                'url' => $url,
+                'mainEntityOfPage' => [
+                    '@type' => 'WebPage',
+                    '@id' => $url,
+                ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => $company,
+                    'url' => $domain,
+                    'logo' => [
+                        '@type' => 'ImageObject',
+                        'url' => $logo,
+                    ],
+                ],
+                'isPartOf' => [
+                    '@type' => 'WebSite',
+                    'name' => $company,
+                    'url' => $domain,
+                ],
+            ],
             'FAQPage' => [
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',
@@ -375,9 +402,9 @@ class SeoService
         };
     }
 
-    public function buildSchemaJson(SeoMeta $seo): ?string
+    public function buildSchemaJson(SeoMeta $seo, bool $force = false): ?string
     {
-        if (filled($seo->schema_json)) {
+        if (! $force && filled($seo->schema_json)) {
             return $seo->schema_json;
         }
 

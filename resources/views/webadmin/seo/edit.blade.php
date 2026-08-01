@@ -178,7 +178,7 @@
 					<div class="col-md-4">
 						<label for="schema_type" class="form-label">Schema Type</label>
 						<select class="form-select" id="schema_type" name="schema_type">
-							@foreach (['none' => 'None', 'WebPage' => 'Web Page', 'FAQPage' => 'FAQ Page', 'Organization' => 'Organization'] as $value => $label)
+							@foreach (['none' => 'None', 'WebPage' => 'Web Page', 'Article' => 'Article / Blog Post', 'FAQPage' => 'FAQ Page', 'Organization' => 'Organization'] as $value => $label)
 								<option value="{{ $value }}" @selected(old('schema_type', $seoMeta->schema_type) === $value)>{{ $label }}</option>
 							@endforeach
 						</select>

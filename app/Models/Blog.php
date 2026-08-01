@@ -38,4 +38,22 @@ class Blog extends Model
 
         return asset('storage/'.$this->featured_image);
     }
+
+    public function seoRouteKey(?string $slug = null): string
+    {
+        return 'blog:'.($slug ?? $this->slug);
+    }
+
+    public function seoUrlSlug(?string $slug = null): string
+    {
+        return '/blog/'.($slug ?? $this->slug);
+    }
+
+    public function seoMeta(?string $slug = null): ?SeoMeta
+    {
+        $slug ??= $this->slug;
+
+        return SeoMeta::query()->forRouteKey($this->seoRouteKey($slug))->first()
+            ?? SeoMeta::query()->forUrlSlug($this->seoUrlSlug($slug))->first();
+    }
 }

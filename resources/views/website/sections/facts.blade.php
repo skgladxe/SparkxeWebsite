@@ -9,11 +9,11 @@
 					</div>
 					<div class="facts-counter-box">
 						<div class="facts-counter-item">
-							<h2>+<span class="counter">150</span></h2>
+							<h2>+<span class="counter" data-count="136">136</span></h2>
 							<p>Projects delivered across web, software, and marketing.</p>
 						</div>
 						<div class="facts-counter-item">
-							<h2>+<span class="counter">95</span>%</h2>
+							<h2>+<span class="counter" data-count="93">93</span>%</h2>
 							<p>Client satisfaction on design, development, and support.</p>
 						</div>
 					</div>

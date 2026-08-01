@@ -1,12 +1,21 @@
+@php
+	$blogAnalyzerCompany = config('website.name', 'Sparkxe Technologies');
+	$blogAnalyzerDomain = rtrim((string) config('website.domain', url('/')), '/');
+	$blogAnalyzerSchemaUrl = ($seoMeta?->id)
+		? route('admin.seo.generate-schema', $seoMeta)
+		: null;
+@endphp
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 	const form = document.getElementById('blogForm');
 	if (!form) return;
 
-	const company = @json(config('website.name', 'Sparkxe Technologies'));
-	const domain = @json(rtrim((string) config('website.domain', url('/')), '/'));
-	const generateSchemaUrl = @json(isset($seoMeta) && $seoMeta?->id ? route('admin.seo.generate-schema', $seoMeta) : null);
+	const company = @json($blogAnalyzerCompany);
+	const domain = @json($blogAnalyzerDomain);
+	const generateSchemaUrl = @json($blogAnalyzerSchemaUrl);
+	const csrfToken = @json(csrf_token());
 
 	const fields = {
 		title: document.getElementById('title'),
@@ -62,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		const descOk = description.length >= 120 && description.length <= 160;
 		const keywordOk = keyword && (containsKeyword(title, keyword) || containsKeyword(description, keyword) || containsKeyword(h1, keyword));
 		let schemaOk = false;
-		try { schemaOk = schemaJson.length > 0 && JSON.parse(schemaJson) !== null; } catch (e) { schemaOk = false; }
+		try { schemaOk = schemaJson.length > 0 && JSON.parse(schemaJson) !== null; } catch (err) { schemaOk = false; }
 
 		if (titleOk) score += 25;
 		if (descOk) score += 25;
@@ -94,20 +103,20 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 
 		const schema = {
-			'@context': 'https://schema.org',
-			'@type': type === 'WebPage' ? 'WebPage' : 'Article',
+			'@@context': 'https://schema.org',
+			'@@type': type === 'WebPage' ? 'WebPage' : 'Article',
 			headline: title,
 			name: title,
 			description: description,
 			url: url,
-			mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+			mainEntityOfPage: { '@@type': 'WebPage', '@@id': url },
 			publisher: {
-				'@type': 'Organization',
+				'@@type': 'Organization',
 				name: company,
 				url: domain,
 			},
 			isPartOf: {
-				'@type': 'WebSite',
+				'@@type': 'WebSite',
 				name: company,
 				url: domain,
 			},
@@ -137,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						'X-CSRF-TOKEN': @json(csrf_token()),
+						'X-CSRF-TOKEN': csrfToken,
 						'Accept': 'application/json',
 					},
 					body: JSON.stringify({

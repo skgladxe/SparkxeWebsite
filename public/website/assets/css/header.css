@@ -126,7 +126,9 @@ header.main-header .header-sticky.is-scrolled .main-menu .nav-menu-wrapper .navb
 }
 
 .main-menu ul li a:hover,
-.main-menu ul li a:focus {
+.main-menu ul li a:focus,
+.main-menu ul li a.active,
+.main-menu ul li.active > a.nav-link {
 	color: var(--accent-secondary-color);
 }
 
@@ -489,6 +491,12 @@ header.main-header .header-sticky.is-scrolled .main-menu .nav-menu-wrapper .navb
 	border: none;
 	cursor: pointer;
 	text-align: left;
+}
+
+.mobile-nav-list > li > a.active,
+.mobile-sub-toggle.active,
+.mobile-menu-panel ul li a.active {
+	color: var(--accent-secondary-color);
 }
 
 .mobile-sub-menu,

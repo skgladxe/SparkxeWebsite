@@ -15,6 +15,10 @@
 		],
 	])
 
+	@include('website.sections.differentiation', [
+		'eyebrow' => 'How We Work',
+		'titleHtml' => 'The people-powered <span>advantage</span>',
+	])
 	@include('website.sections.team')
 	@include('website.sections.cta-banner')
 @endsection

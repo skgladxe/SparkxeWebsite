@@ -15,6 +15,7 @@
 		],
 	])
 
+	@include('website.sections.about-compass')
 	@include('website.sections.about')
 	@include('website.sections.how-it-works')
 	@include('website.sections.cta-banner')

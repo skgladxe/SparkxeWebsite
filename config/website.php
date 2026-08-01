@@ -1,10 +1,14 @@
 <?php
 
 return [
-    'name' => 'Sparkxe',
+    'name' => 'Sparkxe Technologies',
+    'short_name' => 'Sparkxe',
+    'domain' => 'https://sparkxe.com',
     'asset_path' => 'website/assets',
-    'title' => 'Sparkxe — Digital Solutions Company',
-    'description' => 'Sparkxe — digital marketing, custom software, mobile apps, e-commerce, ERP, and full-stack digital solutions for modern businesses.',
+    'title' => 'Sparkxe Technologies — Custom Software Development Company',
+    'description' => 'Sparkxe Technologies is a custom software development company delivering digital marketing, AI SEO (AEO / GEO), mobile apps, e-commerce, ERP, and full-stack digital solutions.',
+    'tagline' => 'Custom Software Development Company',
+    'twitter_tagline' => 'Software Development Company',
     'email' => 'sparkxe360@gmail.com',
     'phone' => '+91 63746 38003',
     'phone_link' => '+916374638003',
@@ -21,6 +25,12 @@ return [
         'lng' => 77.24643222985819,
         'zoom' => 16,
         'embed' => 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3727.4122673230045!2d77.24385727480266!3d10.622733689516858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e1!3m2!1sen!2sin!4v1784996006538!5m2!1sen!2sin',
+    ],
+    'seo' => [
+        'og_type' => 'website',
+        'twitter_card' => 'summary_large_image',
+        'og_image' => 'https://sparkxe.com/images/og-image.jpg',
+        'default_keywords' => 'sparkxe, sparkxe technologies, sparkxe.com, custom software development company, ai seo, aeo, geo, answer engine optimization, generative engine optimization, digital marketing, web development',
     ],
     'default_theme' => 'spark',
     'themes' => [
@@ -43,7 +53,7 @@ return [
         'phone' => 'tel:+916374638003',
     ],
     'specialization_services' => [
-        ['slug' => 'digital-marketing', 'icon' => 'fa-solid fa-bullhorn', 'title' => 'Digital Marketing', 'description' => 'SEO, paid ads, and lead funnels that turn traffic into paying customers.'],
+        ['slug' => 'digital-marketing', 'icon' => 'fa-solid fa-bullhorn', 'title' => 'Digital Marketing', 'description' => 'AI SEO (AEO / GEO), paid ads, and lead funnels that turn traffic into paying customers.'],
         ['slug' => 'pos-software', 'icon' => 'fa-solid fa-cash-register', 'title' => 'POS Software', 'description' => 'Fast billing, inventory tracking, and sales reports for retail and restaurants.'],
         ['slug' => 'mobile-apps', 'icon' => 'fa-solid fa-mobile-screen', 'title' => 'Android & iOS Apps', 'description' => 'Native and cross-platform mobile apps built for performance and scale.'],
         ['slug' => 'business-website', 'icon' => 'fa-solid fa-globe', 'title' => 'Business Website', 'description' => 'Professional websites that build trust and convert visitors into leads.'],

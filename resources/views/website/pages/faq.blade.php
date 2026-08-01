@@ -16,5 +16,9 @@
 	])
 
 	@include('website.sections.faq')
+	@include('website.sections.differentiation', [
+		'eyebrow' => 'Why Clients Stay',
+		'titleHtml' => 'What makes Sparkxe <span>different</span>',
+	])
 	@include('website.sections.cta-banner')
 @endsection

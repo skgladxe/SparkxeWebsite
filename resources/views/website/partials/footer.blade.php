@@ -53,7 +53,7 @@
 					</div>
 				</div>
 				<div class="footer-bottom">
-					<p>Copyright &copy; {{ date('Y') }} Sparkxe. All rights reserved.</p>
+					<p>Copyright &copy; {{ date('Y') }} {{ config('website.name', 'Sparkxe Technologies') }}. All rights reserved. <a href="{{ config('website.domain', 'https://sparkxe.com') }}" rel="noopener">sparkxe.com</a></p>
 				</div>
 			</div>
 		</div>

@@ -31,5 +31,8 @@
 		</div>
 	</section>
 
+	@include('website.sections.how-it-works')
+	@include('website.sections.industries')
+	@include('website.sections.tech-stack')
 	@include('website.sections.cta-banner')
 @endsection

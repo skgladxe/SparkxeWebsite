@@ -3769,6 +3769,8 @@ namespace App\Models {
 	 * @property string|null $remember_token
 	 * @property string $password
 	 * @property \Illuminate\Support\Carbon|null $email_verified_at
+	 * @property string|null $avatar
+	 * @property string|null $role
 	 * @property string $email
 	 * @property string $name
 	 * @property int $id
@@ -3777,6 +3779,8 @@ namespace App\Models {
 	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereId($value)
 	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereName($value)
 	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereEmail($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereRole($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereAvatar($value)
 	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereEmailVerifiedAt($value)
 	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User wherePassword($value)
 	 * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereRememberToken($value)

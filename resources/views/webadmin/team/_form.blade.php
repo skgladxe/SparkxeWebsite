@@ -11,7 +11,7 @@
 	<div class="col-md-6">
 		<label class="form-label">Photo</label>
 		<input type="file" name="photo" class="form-control" accept="image/*">
-		<small class="text-muted">Recommended: portrait image, at least 600x800px.</small>
+		<small class="text-muted">Recommended: clear portrait photo, at least 800×1000px (JPG/PNG).</small>
 		@if ($member?->photoUrl())
 			<div class="mt-3">
 				<img src="{{ $member->photoUrl() }}" alt="{{ $member->name }}" class="rounded" style="width: 180px; height: 220px; object-fit: cover;">

@@ -335,14 +335,15 @@
         });
   
         /* Font family */
-        $('#pe-font-family-sel').addEventListener('change', e => {
+        this.toolbar.querySelector('.pe-select-font-family')?.addEventListener('change', e => {
           this._restoreRange();
+          if (!e.target.value) return;
           document.execCommand('fontName', false, e.target.value);
           this._saveHistory();
         });
   
         /* Font size */
-        $('#pe-font-size-sel').addEventListener('change', e => {
+        this.toolbar.querySelector('.pe-select-font-size')?.addEventListener('change', e => {
           this._restoreRange();
           const px = e.target.value;
           if (!px) return;
@@ -392,10 +393,47 @@
           case 'toggleSidebar': this._toggleSidebar(); break;
           case 'foreColor': this._openColorPopup('fore'); break;
           case 'backColor': this._openColorPopup('back'); break;
+          case 'removeFormat': this._removeFormat(); break;
           default:
             document.execCommand(cmd, false, null);
             this._saveHistory();
         }
+      }
+
+      _removeFormat() {
+        this._restoreRange();
+        document.execCommand('removeFormat', false, null);
+        document.execCommand('unlink', false, null);
+
+        const sel = window.getSelection();
+        if (sel?.rangeCount && !sel.isCollapsed) {
+          const range = sel.getRangeAt(0);
+          const ancestor = range.commonAncestorContainer;
+          const scope = ancestor.nodeType === 1 ? ancestor : ancestor.parentElement;
+          if (scope && this.content.contains(scope)) {
+            const root = scope === this.content ? this.content : scope;
+            Array.from(root.querySelectorAll('span, font')).forEach(el => {
+              try {
+                if (!sel.containsNode(el, true)) return;
+              } catch (err) {
+                return;
+              }
+              el.removeAttribute('style');
+              el.removeAttribute('class');
+              el.removeAttribute('face');
+              el.removeAttribute('color');
+              el.removeAttribute('size');
+              if (!el.attributes.length) {
+                const parent = el.parentNode;
+                if (!parent) return;
+                while (el.firstChild) parent.insertBefore(el.firstChild, el);
+                parent.removeChild(el);
+              }
+            });
+          }
+        }
+
+        this._saveHistory();
       }
   
       /* ══════════════════════════════════════
@@ -443,18 +481,198 @@
           }
         });
   
-        /* Paste images */
-        c.addEventListener('paste', e => {
-          const items = e.clipboardData?.items;
-          if (!items) return;
-          for (const item of items) {
-            if (item.type.startsWith('image/')) {
-              e.preventDefault();
-              this._insertImageFromFile(item.getAsFile());
-              return;
+        /* Paste: clean HTML from websites/Word, or insert image files */
+        c.addEventListener('paste', e => this._handlePaste(e));
+      }
+
+      _handlePaste(e) {
+        const clipboard = e.clipboardData;
+        if (!clipboard) return;
+
+        const items = clipboard.items ? Array.from(clipboard.items) : [];
+        const hasHtmlOrText = items.some(item =>
+          item.type === 'text/html' || item.type === 'text/plain'
+        );
+
+        // Only treat as image paste when there is no text/html payload
+        if (!hasHtmlOrText) {
+          const imageItem = items.find(item => item.type.startsWith('image/'));
+          if (imageItem) {
+            e.preventDefault();
+            this._insertImageFromFile(imageItem.getAsFile());
+            return;
+          }
+        }
+
+        const html = clipboard.getData('text/html');
+        const text = clipboard.getData('text/plain');
+
+        // Prefer cleaned HTML; fall back to plain text paragraphs
+        if (html && html.trim()) {
+          e.preventDefault();
+          const clean = this._sanitizePastedHTML(html);
+          if (clean) {
+            this._insertHTML(clean);
+            this._syncTextarea();
+            this._updateWordCount();
+            this._saveHistory();
+          }
+          return;
+        }
+
+        if (text && text.trim()) {
+          e.preventDefault();
+          const paragraphs = text
+            .replace(/\r\n/g, '\n')
+            .split(/\n{2,}/)
+            .map(block => block.split('\n').map(line => this._escapeHtml(line)).join('<br>'))
+            .map(block => `<p>${block || '<br>'}</p>`)
+            .join('');
+          this._insertHTML(paragraphs);
+          this._syncTextarea();
+          this._updateWordCount();
+          this._saveHistory();
+        }
+      }
+
+      _escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      _insertHTML(html) {
+        this._restoreRange();
+        this.content.focus();
+        // insertHTML is the most reliable cross-browser paste insertion
+        const ok = document.execCommand('insertHTML', false, html);
+        if (!ok) {
+          const sel = window.getSelection();
+          if (!sel?.rangeCount) {
+            this.content.insertAdjacentHTML('beforeend', html);
+            return;
+          }
+          const range = sel.getRangeAt(0);
+          range.deleteContents();
+          const temp = document.createElement('div');
+          temp.innerHTML = html;
+          const frag = document.createDocumentFragment();
+          while (temp.firstChild) frag.appendChild(temp.firstChild);
+          range.insertNode(frag);
+        }
+      }
+
+      _sanitizePastedHTML(rawHtml) {
+        // Strip Word/Office conditionals and XML namespaces
+        let html = String(rawHtml)
+          .replace(/<!--\[if[\s\S]*?\]-->/gi, '')
+          .replace(/<!\[if[\s\S]*?\]>/gi, '')
+          .replace(/<!\[endif\]-->/gi, '')
+          .replace(/<\/?(?:xml|o:|v:|w:|m:)[^>]*>/gi, '')
+          .replace(/<style[\s\S]*?<\/style>/gi, '')
+          .replace(/<script[\s\S]*?<\/script>/gi, '')
+          .replace(/<meta[^>]*>/gi, '')
+          .replace(/<link[^>]*>/gi, '')
+          .replace(/<title[\s\S]*?<\/title>/gi, '');
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(`<div id="pe-paste-root">${html}</div>`, 'text/html');
+        const root = doc.getElementById('pe-paste-root') || doc.body;
+        if (!root) return '';
+
+        const allowed = new Set([
+          'P', 'BR', 'DIV', 'SPAN', 'STRONG', 'B', 'EM', 'I', 'U', 'S', 'STRIKE', 'DEL',
+          'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'BLOCKQUOTE', 'PRE', 'CODE',
+          'UL', 'OL', 'LI', 'A', 'IMG', 'HR', 'SUB', 'SUP',
+          'TABLE', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TH', 'TD',
+        ]);
+
+        const allowedAttrs = {
+          A: ['href', 'title', 'target', 'rel'],
+          IMG: ['src', 'alt', 'title', 'width', 'height'],
+          TD: ['colspan', 'rowspan'],
+          TH: ['colspan', 'rowspan'],
+        };
+
+        const unwrap = (el) => {
+          const parent = el.parentNode;
+          if (!parent) { el.remove(); return; }
+          while (el.firstChild) parent.insertBefore(el.firstChild, el);
+          parent.removeChild(el);
+        };
+
+        const process = (parent) => {
+          let child = parent.firstChild;
+          while (child) {
+            const next = child.nextSibling;
+
+            if (child.nodeType === 8) {
+              child.remove();
+            } else if (child.nodeType === 3) {
+              child.textContent = child.textContent.replace(/\u00a0/g, ' ');
+            } else if (child.nodeType === 1) {
+              process(child);
+
+              const tag = child.tagName;
+              if (!allowed.has(tag)) {
+                unwrap(child);
+              } else {
+                const keep = allowedAttrs[tag] || [];
+                Array.from(child.attributes).forEach(attr => {
+                  if (!keep.includes(attr.name.toLowerCase())) {
+                    child.removeAttribute(attr.name);
+                  }
+                });
+
+                if (tag === 'A') {
+                  const href = (child.getAttribute('href') || '').trim();
+                  if (!href || href.toLowerCase().startsWith('javascript:')) {
+                    unwrap(child);
+                  } else if (child.getAttribute('target') === '_blank') {
+                    child.setAttribute('rel', 'noopener noreferrer');
+                  }
+                } else if (tag === 'IMG') {
+                  const src = (child.getAttribute('src') || '').trim();
+                  if (!src || src.toLowerCase().startsWith('javascript:')) {
+                    child.remove();
+                  }
+                } else if (tag === 'SPAN' && child.attributes.length === 0) {
+                  unwrap(child);
+                }
+              }
+            } else {
+              child.remove();
             }
+
+            child = next;
+          }
+        };
+
+        process(root);
+
+        // Turn leaf divs into paragraphs; unwrap divs that already wrap blocks
+        Array.from(root.querySelectorAll('div')).forEach(div => {
+          const hasBlock = Array.from(div.children).some(el =>
+            ['P', 'DIV', 'UL', 'OL', 'TABLE', 'BLOCKQUOTE', 'PRE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'HR'].includes(el.tagName)
+          );
+          if (!hasBlock) {
+            const p = doc.createElement('p');
+            while (div.firstChild) p.appendChild(div.firstChild);
+            div.replaceWith(p);
+          } else {
+            unwrap(div);
           }
         });
+
+        // Drop empty paragraphs left by Word/Google Docs
+        Array.from(root.querySelectorAll('p')).forEach(p => {
+          const text = (p.textContent || '').replace(/\u00a0/g, ' ').trim();
+          if (!text && !p.querySelector('img, br')) p.remove();
+        });
+
+        return root.innerHTML.trim();
       }
   
       _handleKeydown(e) {
@@ -1833,6 +2051,26 @@
         clone.querySelectorAll('.pe-col-resizer, .pe-row-resizer, .pe-resize-handle').forEach(node => node.remove());
         clone.querySelectorAll('.selected, .pe-table-selected, .pe-cell-selected').forEach(node => {
           node.classList.remove('selected', 'pe-table-selected', 'pe-cell-selected');
+        });
+
+        // Strip leftover paste junk that breaks frontend rendering
+        clone.querySelectorAll('*').forEach(el => {
+          ['contenteditable', 'spellcheck', 'dir', 'lang'].forEach(attr => el.removeAttribute(attr));
+
+          // Keep only editor layout classes (pe-*)
+          if (el.hasAttribute('class')) {
+            const kept = Array.from(el.classList).filter(c => c.startsWith('pe-'));
+            if (kept.length) el.className = kept.join(' ');
+            else el.removeAttribute('class');
+          }
+
+          // Drop empty inline wrappers
+          if (['SPAN', 'FONT'].includes(el.tagName) && !el.attributes.length) {
+            const parent = el.parentNode;
+            if (!parent) return;
+            while (el.firstChild) parent.insertBefore(el.firstChild, el);
+            parent.removeChild(el);
+          }
         });
 
         return clone.innerHTML;

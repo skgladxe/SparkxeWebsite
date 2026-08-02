@@ -35,8 +35,29 @@
     --pe-transition: 0.15s ease;
   }
   
-  /* ── Reset ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── Scoped reset (do not reset the whole admin page) ── */
+  .pe-wrapper,
+  .pe-wrapper *,
+  .pe-wrapper *::before,
+  .pe-wrapper *::after,
+  .pe-modal-overlay,
+  .pe-modal-overlay *,
+  .pe-modal-overlay *::before,
+  .pe-modal-overlay *::after,
+  .pe-color-popup,
+  .pe-color-popup *,
+  .pe-context-menu,
+  .pe-context-menu * {
+    box-sizing: border-box;
+  }
+
+  .pe-wrapper,
+  .pe-modal-overlay,
+  .pe-color-popup,
+  .pe-context-menu {
+    margin: 0;
+    padding: 0;
+  }
   
   /* ── Demo Page ── */
   .demo-page { min-height: 100vh; background: var(--pe-bg); font-family: var(--pe-font); }

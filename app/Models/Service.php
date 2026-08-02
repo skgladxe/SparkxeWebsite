@@ -61,10 +61,15 @@ class Service extends Model
         return preg_replace(
             [
                 '/\sstyle=("|\')(.*?)\1/i',
+                '/\sclass=("|\')(.*?)\1/i',
                 '/\scontenteditable=("|\')(.*?)\1/i',
                 '/\sspellcheck=("|\')(.*?)\1/i',
                 '/\sid=("|\')(.*?)\1/i',
+                '/\sdir=("|\')(.*?)\1/i',
+                '/\slang=("|\')(.*?)\1/i',
                 '/\sdata-[a-z0-9\-_]+=("|\\\')(.*?)\1/i',
+                '/<\/?(?:font|span)(?:\s[^>]*)?>/i',
+                '/<!--.*?-->/s',
             ],
             '',
             $this->notes

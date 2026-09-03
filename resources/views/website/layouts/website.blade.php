@@ -43,6 +43,7 @@
 
 	@include('website.partials.preloader')
 	@include('website.partials.grid-lines')
+	@include('website.partials.ambient-glow')
 	@include('website.partials.cursor-glow')
 	@include('website.partials.header')
 

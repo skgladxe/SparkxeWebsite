@@ -306,3 +306,58 @@ h1, h2, h3, h4, h5, h6, p {
 		margin-top: 10px;
 	}
 }
+
+/* Cursor glow — theme-matched green shadow follow */
+.cursor-glow {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	overflow: hidden;
+}
+
+.cursor-glow-layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 50%;
+	opacity: 0;
+	will-change: transform;
+	transition: opacity 0.45s ease;
+}
+
+body.cursor-glow-ready .cursor-glow-layer {
+	opacity: 0.72;
+}
+
+.cursor-glow-layer--outer {
+	width: min(220px, 32vw);
+	height: min(220px, 32vw);
+	background: radial-gradient(
+		circle,
+		color-mix(in srgb, var(--accent-secondary-color) 18%, transparent) 0%,
+		color-mix(in srgb, var(--accent-color) 9%, transparent) 42%,
+		transparent 72%
+	);
+	filter: blur(32px);
+	transform: translate3d(-50%, -50%, 0);
+}
+
+.cursor-glow-layer--inner {
+	width: min(110px, 18vw);
+	height: min(110px, 18vw);
+	background: radial-gradient(
+		circle,
+		color-mix(in srgb, var(--accent-secondary-color) 24%, transparent) 0%,
+		color-mix(in srgb, var(--accent-color) 12%, transparent) 50%,
+		transparent 75%
+	);
+	filter: blur(14px);
+	transform: translate3d(-50%, -50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none) {
+	.cursor-glow {
+		display: none;
+	}
+}

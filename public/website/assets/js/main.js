@@ -275,4 +275,57 @@
 	});
 
 	updateCookiePrefStatus();
+
+	/* Cursor glow — smooth green shadow follow */
+	(function initCursorGlow() {
+		var outer = document.getElementById("cursorGlowOuter");
+		var inner = document.getElementById("cursorGlowInner");
+		if (!outer || !inner) return;
+
+		var canAnimate =
+			window.matchMedia("(hover: hover)").matches &&
+			!window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+		if (!canAnimate) return;
+
+		var targetX = window.innerWidth / 2;
+		var targetY = window.innerHeight / 2;
+		var outerX = targetX;
+		var outerY = targetY;
+		var innerX = targetX;
+		var innerY = targetY;
+		var active = false;
+
+		function setTransform(el, x, y) {
+			el.style.transform = "translate3d(" + x + "px, " + y + "px, 0) translate(-50%, -50%)";
+		}
+
+		document.addEventListener("mousemove", function (e) {
+			targetX = e.clientX;
+			targetY = e.clientY;
+			if (!active) {
+				active = true;
+				$body.addClass("cursor-glow-ready");
+				outerX = targetX;
+				outerY = targetY;
+				innerX = targetX;
+				innerY = targetY;
+			}
+		});
+
+		document.addEventListener("mouseleave", function () {
+			active = false;
+			$body.removeClass("cursor-glow-ready");
+		});
+
+		(function tick() {
+			outerX += (targetX - outerX) * 0.08;
+			outerY += (targetY - outerY) * 0.08;
+			innerX += (targetX - innerX) * 0.14;
+			innerY += (targetY - innerY) * 0.14;
+			setTransform(outer, outerX, outerY);
+			setTransform(inner, innerX, innerY);
+			requestAnimationFrame(tick);
+		})();
+	})();
 })(jQuery);

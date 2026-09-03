@@ -950,9 +950,13 @@
 }
 
 .site-newsletter-bar {
-	padding: var(--section-space) 0;
+	padding: var(--section-space-tight) 0;
 	position: relative;
 	z-index: 1;
+}
+
+.spark-cta-banner + .site-newsletter-bar {
+	padding-top: 0;
 }
 
 .site-newsletter-bar .footer-newsletter {

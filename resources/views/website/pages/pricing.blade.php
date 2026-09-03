@@ -15,7 +15,7 @@
 		],
 	])
 
-	@include('website.sections.pricing')
+	@include('website.sections.pricing', ['hideHeading' => true])
 	@include('website.sections.faq')
 	@include('website.sections.cta-banner')
 @endsection

@@ -1,15 +1,24 @@
 @extends('website.layouts.website')
 
+@section('title', 'Blog — '.config('website.name'))
+@section('meta_description', 'Tips and trends from the Sparkxe team — practical advice on digital marketing, custom software, and design.')
+
 @section('content')
 	@include('website.partials.page-hero', [
-		'eyebrow' => 'Latest Insights',
+		'eyebrow' => 'Blog',
 		'title' => 'Tips and trends from the Sparkxe team',
 		'highlight' => 'Sparkxe team',
-		'description' => 'Practical advice on digital marketing, custom software, and design for modern businesses.',
 		'breadcrumbs' => [
 			['label' => 'Home', 'url' => route('website.home')],
 			['label' => 'Blog'],
 		],
+	])
+
+	@include('website.partials.page-intro', [
+		'eyebrow' => 'Our Blog',
+		'title' => 'Latest insights',
+		'highlight' => 'insights',
+		'description' => 'Practical advice on digital marketing, custom software, and design for modern businesses.',
 	])
 
 	<section class="spark-blog blog-page">
@@ -34,6 +43,12 @@
 					<p>No blog posts published yet.</p>
 				@endforelse
 			</div>
+
+			@if ($blogs->hasPages())
+				<div class="site-pagination-wrap">
+					{{ $blogs->withQueryString()->onEachSide(1)->links('website.partials.pagination') }}
+				</div>
+			@endIf
 		</div>
 	</section>
 

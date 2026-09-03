@@ -8,14 +8,20 @@
 		'eyebrow' => 'FAQ',
 		'title' => 'Answers to questions we hear often',
 		'highlight' => 'hear often',
-		'description' => "Can't find what you're looking for? Reach out — we're happy to help with a free consultation.",
 		'breadcrumbs' => [
 			['label' => 'Home', 'url' => route('website.home')],
 			['label' => 'FAQ'],
 		],
 	])
 
-	@include('website.sections.faq')
+	@include('website.partials.page-intro', [
+		'eyebrow' => 'Quick Answers',
+		'title' => 'Everything you need to know',
+		'highlight' => 'need to know',
+		'description' => "Can't find what you're looking for? Reach out — we're happy to help with a free consultation.",
+	])
+
+	@include('website.sections.faq', ['hideHeading' => true])
 	@include('website.sections.differentiation', [
 		'eyebrow' => 'Why Clients Stay',
 		'titleHtml' => 'What makes Sparkxe <span>different</span>',

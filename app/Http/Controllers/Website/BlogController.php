@@ -12,7 +12,7 @@ class BlogController extends Controller
     public function index(): View
     {
         return view('website.pages.blog', [
-            'blogs' => Blog::query()->published()->with('category')->latest('published_at')->get(),
+            'blogs' => Blog::query()->published()->with('category')->latest('published_at')->paginate(6),
             'categories' => BlogCategory::query()->where('is_active', true)->orderBy('sort_order')->get(),
         ]);
     }

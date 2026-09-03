@@ -8,11 +8,17 @@
 		'eyebrow' => 'About Sparkxe',
 		'title' => 'Your partner for end-to-end growth',
 		'highlight' => 'end-to-end growth',
-		'description' => 'Sparkxe is a full-service digital company helping businesses build their online presence, automate operations, and scale with custom software.',
 		'breadcrumbs' => [
 			['label' => 'Home', 'url' => route('website.home')],
 			['label' => 'About'],
 		],
+	])
+
+	@include('website.partials.page-intro', [
+		'eyebrow' => 'Who We Are',
+		'title' => 'Built for modern businesses',
+		'highlight' => 'modern businesses',
+		'description' => 'Sparkxe is a full-service digital company helping businesses build their online presence, automate operations, and scale with custom software.',
 	])
 
 	@include('website.sections.about-compass')

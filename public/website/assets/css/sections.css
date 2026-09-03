@@ -590,3 +590,78 @@
 		margin-top: 24px;
 	}
 }
+
+/************************************/
+/* Home page — centered section titles */
+/************************************/
+
+.page-home .section-title:not(.dark-section) {
+	text-align: center;
+}
+
+.page-home .section-title:not(.dark-section) h2 {
+	text-align: center;
+}
+
+.page-home .section-title:not(.dark-section) h3 {
+	padding-left: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+}
+
+.page-home .section-title:not(.dark-section) h3::before {
+	position: static;
+	transform: none;
+	flex-shrink: 0;
+}
+
+.page-home .hero .section-title h3 {
+	padding-left: 20px;
+	display: inline-block;
+}
+
+.page-home .hero .section-title h3::before {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.page-home .our-tools .section-row {
+	justify-content: center;
+	text-align: center;
+}
+
+.page-home .our-tools .section-row .col-lg-4 {
+	text-align: center !important;
+	margin-top: 20px;
+}
+
+.page-home .our-specialization .section-row {
+	text-align: center;
+}
+
+.page-home .our-specialization .section-content-btn {
+	justify-content: center;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.page-home .our-specialization .section-title-content p {
+	max-width: 640px;
+	margin: 0 auto;
+}
+
+.page-home .spark-testimonials .section-row {
+	justify-content: center;
+	text-align: center;
+}
+
+.page-home .spark-industries .section-title,
+.page-home .our-facts .section-title {
+	text-align: center;
+}

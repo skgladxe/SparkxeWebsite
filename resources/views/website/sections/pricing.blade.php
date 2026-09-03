@@ -1,18 +1,20 @@
 <!-- Pricing -->
 <section class="spark-pricing" id="pricing">
 	<div class="container">
-		<div class="row section-row justify-content-center text-center">
-			<div class="col-lg-8">
-				<x-website::section-heading
-					eyebrow="Pricing Plans"
-					title="Flexible packages for every business stage"
-					highlight="business stage"
-					description="Whether you need a landing page, a full e-commerce store, or enterprise software — Sparkxe has a plan that fits your budget and goals."
-					:centered="true"
-				/>
+		@if (!($hideHeading ?? false))
+			<div class="row section-row justify-content-center text-center">
+				<div class="col-lg-8">
+					<x-website::section-heading
+						eyebrow="Pricing Plans"
+						title="Flexible packages for every business stage"
+						highlight="business stage"
+						description="Whether you need a landing page, a full e-commerce store, or enterprise software — Sparkxe has a plan that fits your budget and goals."
+						:centered="true"
+					/>
+				</div>
 			</div>
-		</div>
-		<div class="pricing-grid wow fadeInUp" data-wow-delay="0.2s">
+		@endIf
+		<div class="pricing-grid wow fadeInUp" data-wow-delay="{{ ($hideHeading ?? false) ? '0.1s' : '0.2s' }}">
 			@foreach (config('website.pricing_plans') as $plan)
 				<x-website::pricing-card
 					:name="$plan['name']"

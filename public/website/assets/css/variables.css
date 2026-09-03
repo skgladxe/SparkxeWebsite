@@ -173,6 +173,7 @@
 
 /* Shared section rhythm (all themes) */
 :root {
+	--header-clearance: 104px;
 	--section-space: 90px;
 	--section-space-tight: 56px;
 	--section-header-gap: 48px;
@@ -181,6 +182,7 @@
 
 @media only screen and (max-width: 991px) {
 	:root {
+		--header-clearance: 92px;
 		--section-space: 70px;
 		--section-space-tight: 44px;
 		--section-header-gap: 36px;
@@ -190,6 +192,7 @@
 
 @media only screen and (max-width: 767px) {
 	:root {
+		--header-clearance: 84px;
 		--section-space: 52px;
 		--section-space-tight: 36px;
 		--section-header-gap: 28px;

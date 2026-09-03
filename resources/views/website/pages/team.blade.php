@@ -8,11 +8,17 @@
 		'eyebrow' => 'Our Team',
 		'title' => 'Experts behind Sparkxe',
 		'highlight' => 'Sparkxe',
-		'description' => 'A passionate team of developers, designers, and marketers dedicated to helping your business grow online.',
 		'breadcrumbs' => [
 			['label' => 'Home', 'url' => route('website.home')],
 			['label' => 'Team'],
 		],
+	])
+
+	@include('website.partials.page-intro', [
+		'eyebrow' => 'Meet The Team',
+		'title' => 'The people behind Sparkxe',
+		'highlight' => 'Sparkxe',
+		'description' => 'A passionate team of developers, designers, and marketers dedicated to helping your business grow online.',
 	])
 
 	@include('website.sections.differentiation', [

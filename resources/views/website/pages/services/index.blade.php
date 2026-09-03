@@ -8,11 +8,17 @@
 		'eyebrow' => $section['eyebrow'],
 		'title' => $section['title'],
 		'highlight' => $section['highlight'],
-		'description' => 'From digital marketing and custom software to branding and hosting — Sparkxe delivers end-to-end solutions under one roof.',
 		'breadcrumbs' => [
 			['label' => 'Home', 'url' => route('website.home')],
 			['label' => 'Services'],
 		],
+	])
+
+	@include('website.partials.page-intro', [
+		'eyebrow' => 'What We Offer',
+		'title' => 'End-to-end solutions for your business',
+		'highlight' => 'your business',
+		'description' => 'From digital marketing and custom software to branding and hosting — Sparkxe delivers everything under one roof.',
 	])
 
 	<section class="our-tools services-index-page">

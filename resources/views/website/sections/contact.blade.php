@@ -4,16 +4,23 @@
 @endphp
 
 <!-- Contact -->
-	<section class="spark-contact" id="contact">
+	<section @class(['spark-contact', 'contact-page' => $hideHeading ?? false, 'contact-home' => ! ($hideHeading ?? false)]) id="contact">
 		<div class="container">
+			@if (!($hideHeading ?? false))
+				<div class="page-intro page-intro-inline wow fadeInUp">
+					<x-website::section-heading
+						eyebrow="Contact Us"
+						title="Let's discuss your next project"
+						highlight="next project"
+						description="Tell us about your business goals and we'll recommend the right mix of web, software, and marketing services."
+						:centered="true"
+					/>
+				</div>
+			@endIf
+
 			<div class="contact-layout">
 				<div>
-					<div class="section-title">
-						<h3 class="wow fadeInUp">Contact Us</h3>
-						<h2 class="wow fadeInUp" data-wow-delay="0.2s">Let's discuss your <span>next project</span></h2>
-						<p class="wow fadeInUp" data-wow-delay="0.3s" style="margin-top: 16px; opacity: 0.85; line-height: 1.6;">Tell us about your business goals and we'll recommend the right mix of web, software, and marketing services.</p>
-					</div>
-					<div class="contact-info-list wow fadeInUp" data-wow-delay="0.4s">
+					<div class="contact-info-list wow fadeInUp" data-wow-delay="{{ ($hideHeading ?? false) ? '0.1s' : '0.15s' }}">
 						<div class="contact-info-item">
 							<div class="icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
 							<div>
@@ -29,12 +36,15 @@
 						</div>
 						<div class="contact-info-item">
 							<div class="icon-wrap"><i class="fa-solid fa-phone"></i></div>
-							<div><h4>Phone</h4><p><a href="tel:{{ config('website.phone_link') }}">{{ config('website.phone') }}</a></p></div>
+							<div>
+								<h4>Phone</h4>
+								<p><a href="tel:{{ config('website.phone_link') }}">{{ config('website.phone') }}</a></p>
+							</div>
 						</div>
 						<div class="contact-info-item">
 							<div class="icon-wrap"><i class="fa-brands fa-whatsapp"></i></div>
 							<div>
-								<h4>WhatsApp</h4>
+								<h4>WhatsApp & Phone</h4>
 								<p>
 									<a href="{{ config('website.social.whatsapp') }}?text={{ urlencode(config('website.whatsapp_message')) }}" target="_blank" rel="noopener noreferrer">
 										{{ config('website.phone') }}

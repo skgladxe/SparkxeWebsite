@@ -33,7 +33,10 @@
 	@stack('styles')
 </head>
 <body
-	class="active-sticky-header"
+	@class([
+		'active-sticky-header',
+		'page-home' => request()->routeIs('website.home', 'home'),
+	])
 	data-theme="{{ $siteSettings['bodyTheme'] ?? config('website.default_theme') }}"
 	data-theme-locked="{{ ($siteSettings['hideThemePicker'] ?? false) || ($siteSettings['themeMode'] ?? 'preset') === 'custom' ? '1' : '0' }}"
 >

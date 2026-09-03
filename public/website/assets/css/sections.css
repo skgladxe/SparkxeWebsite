@@ -409,6 +409,11 @@
 	z-index: 1;
 }
 
+.services-section-btn {
+	margin-top: 8px;
+	margin-bottom: var(--section-header-gap);
+}
+
 .tool-item {
 	background: var(--secondary-color);
 	border: 1px solid var(--divider-color);
@@ -627,16 +632,6 @@
 	left: 0;
 	top: 50%;
 	transform: translateY(-50%);
-}
-
-.page-home .our-tools .section-row {
-	justify-content: center;
-	text-align: center;
-}
-
-.page-home .our-tools .section-row .col-lg-4 {
-	text-align: center !important;
-	margin-top: 20px;
 }
 
 .page-home .our-specialization .section-row {

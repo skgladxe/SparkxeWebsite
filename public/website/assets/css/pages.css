@@ -2116,72 +2116,96 @@
 	overflow: hidden;
 }
 
-.x-section.spark-team {
-	padding-bottom: 0;
+.x-section.spark-team.team-page-section {
+	padding-bottom: var(--section-space-tight);
+}
+
+.spark-difference.spark-difference-compact + .spark-cta-banner {
+	padding-top: var(--section-space-tight);
+}
+
+.page-intro + .x-section.spark-team.team-page-section {
+	padding-top: 0;
+	padding-bottom: var(--section-space-tight);
+}
+
+.spark-team.team-page-section + .spark-difference {
+	padding-top: 0;
+	border-top: 1px solid var(--divider-color);
+}
+
+.spark-team.team-page-section + .spark-difference.spark-difference-compact {
+	padding-bottom: var(--section-space-tight);
+}
+
+.spark-difference.spark-difference-compact .difference-intro-centered {
+	text-align: center;
+	max-width: 720px;
+	margin: 0 auto var(--section-header-gap);
+}
+
+.spark-difference.spark-difference-compact .difference-intro-centered .difference-lead {
+	max-width: none;
+	margin-bottom: 0;
+}
+
+.spark-difference.spark-difference-compact .difference-layout {
+	grid-template-columns: 1fr;
+	gap: 0;
+	max-width: 640px;
+	margin: 0 auto;
+}
+
+.spark-difference.spark-difference-compact .difference-cta {
+	text-align: center;
+	margin-top: var(--section-header-gap);
 }
 
 .team-showcase {
 	display: flex;
 	flex-direction: column;
-	gap: 0;
+	gap: clamp(20px, 3vw, 28px);
 }
 
 .team-showcase-row {
+	padding: 0;
+	border: none;
+}
+
+.team-showcase-card {
 	display: grid;
-	grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-	gap: clamp(32px, 5vw, 64px);
-	align-items: center;
-	padding: clamp(40px, 5vw, 56px) 0;
-	border-bottom: 1px solid var(--divider-color);
+	grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+	gap: clamp(24px, 4vw, 40px);
+	align-items: start;
+	padding: clamp(24px, 3vw, 32px);
+	border: 1px solid var(--divider-color);
+	border-radius: 20px;
+	background: var(--secondary-color);
+	transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.team-showcase-row:first-child {
-	padding-top: 0;
-}
-
-.team-showcase-row:last-child {
-	border-bottom: 0;
-	padding-bottom: 0;
-}
-
-.team-showcase-row.is-reversed .team-showcase-media {
-	order: 2;
-}
-
-.team-showcase-row.is-reversed .team-showcase-content {
-	order: 1;
-}
-
-.team-showcase-media {
-	display: flex;
-	width: 100%;
-}
-
-.team-showcase-row:not(.is-reversed) .team-showcase-media {
-	justify-content: flex-start;
-}
-
-.team-showcase-row.is-reversed .team-showcase-media {
-	justify-content: flex-end;
+.team-showcase-card:hover {
+	border-color: rgba(107, 253, 217, 0.22);
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
 }
 
 .team-showcase-photo {
 	position: relative;
 	width: 100%;
-	max-width: 340px;
-	aspect-ratio: 4 / 5;
-	border-radius: 24px;
+	max-width: 200px;
+	aspect-ratio: 1;
+	border-radius: 16px;
 	overflow: hidden;
 	border: 1px solid var(--divider-color);
-	background: var(--secondary-color);
-	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+	background: var(--black-color);
+	box-shadow: none;
 }
 
 .team-showcase-photo img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	object-position: top center;
+	object-position: center top;
 	display: block;
 }
 
@@ -2191,68 +2215,82 @@
 	justify-content: center;
 	background:
 		radial-gradient(circle at 30% 18%, rgba(107, 253, 217, 0.14) 0%, transparent 55%),
-		var(--secondary-color);
+		var(--black-color);
 }
 
 .team-showcase-photo-fallback::before {
 	content: "";
 	position: absolute;
-	inset: 12px;
+	inset: 10px;
 	border: 1px solid rgba(107, 253, 217, 0.12);
-	border-radius: 18px;
+	border-radius: 12px;
 	pointer-events: none;
 }
 
 .team-showcase-initial {
 	position: relative;
 	z-index: 1;
-	font-size: clamp(64px, 10vw, 88px);
+	font-size: clamp(48px, 8vw, 64px);
 	font-weight: 700;
 	line-height: 1;
+	opacity: 0.35;
 	background: linear-gradient(135deg, var(--accent-secondary-color) 0%, var(--accent-color) 100%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	opacity: 0.45;
 }
 
-.team-showcase-content {
-	max-width: 560px;
-}
-
-.team-showcase-row.is-reversed .team-showcase-content {
-	margin-left: auto;
+.team-showcase-media {
+	display: flex;
+	width: 100%;
+	justify-content: flex-start;
 }
 
 .team-showcase-role {
 	display: inline-block;
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: 700;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	color: var(--accent-secondary-color);
-	margin-bottom: 12px;
+	margin-bottom: 10px;
 }
 
 .team-showcase-name {
-	font-size: clamp(26px, 3.5vw, 36px);
+	font-size: clamp(22px, 3vw, 30px);
 	font-weight: 700;
-	margin-bottom: 16px;
-	line-height: 1.2;
+	margin-bottom: 12px;
+	line-height: 1.25;
+}
+
+.team-showcase-content {
+	max-width: none;
 }
 
 .team-showcase-description {
-	font-size: 16px;
-	line-height: 1.75;
-	opacity: 0.88;
-	margin-bottom: 16px;
+	font-size: 15px;
+	line-height: 1.7;
+	margin-bottom: 12px;
 }
 
 .team-showcase-notes {
-	font-size: 15px;
-	line-height: 1.75;
-	opacity: 0.82;
-	margin-bottom: 0;
+	font-size: 14px;
+	line-height: 1.65;
+	opacity: 0.78;
+	max-height: 132px;
+	overflow-y: auto;
+	padding-right: 8px;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(107, 253, 217, 0.35) transparent;
+}
+
+.team-showcase-notes::-webkit-scrollbar {
+	width: 4px;
+}
+
+.team-showcase-notes::-webkit-scrollbar-thumb {
+	background: rgba(107, 253, 217, 0.35);
+	border-radius: 4px;
 }
 
 .team-showcase-notes p {
@@ -2296,31 +2334,29 @@
 		grid-template-columns: 1fr 1fr;
 	}
 
-	.team-showcase-row,
-	.team-showcase-row.is-reversed {
+	.team-showcase-card {
 		grid-template-columns: 1fr;
-		gap: 28px;
-		padding: 36px 0;
+		gap: 20px;
+		text-align: center;
 	}
 
-	.team-showcase-media,
-	.team-showcase-row:not(.is-reversed) .team-showcase-media,
-	.team-showcase-row.is-reversed .team-showcase-media {
+	.team-showcase-media {
 		justify-content: center;
 	}
 
 	.team-showcase-photo {
-		max-width: 300px;
+		max-width: 160px;
+		margin: 0 auto;
 	}
 
-	.team-showcase-content,
-	.team-showcase-row.is-reversed .team-showcase-content {
-		max-width: none;
-		margin-left: 0;
+	.team-showcase-role,
+	.team-showcase-name,
+	.team-showcase-description {
+		text-align: center;
 	}
 
-	.team-showcase-row.is-reversed .team-showcase-media,
-	.team-showcase-row.is-reversed .team-showcase-content {
-		order: unset;
+	.team-showcase-notes {
+		text-align: left;
+		max-height: 120px;
 	}
 }

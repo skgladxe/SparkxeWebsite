@@ -21,10 +21,11 @@
 		'description' => 'A passionate team of developers, designers, and marketers dedicated to helping your business grow online.',
 	])
 
+	@include('website.sections.team')
 	@include('website.sections.differentiation', [
 		'eyebrow' => 'How We Work',
 		'titleHtml' => 'The people-powered <span>advantage</span>',
+		'compact' => true,
 	])
-	@include('website.sections.team')
 	@include('website.sections.cta-banner')
 @endsection
